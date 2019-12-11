@@ -1,0 +1,226 @@
+<mat-toolbar color="primary" *ngIf="schema$ | async; let schema">
+  <span>
+    <h4>
+      <mat-icon>{{ schema.icon }}</mat-icon>
+      <span>{{ schema.title }}</span>
+      <button
+        mat-icon-button
+        #clipboard="matClipboard"
+        [matClipboard]="bucketId"
+        [matTooltip]="'Copied!'"
+        (mouseenter)="$event.stopImmediatePropagation()"
+        (click)="tooltip.toggle()"
+        #tooltip="matTooltip"
+      >
+        <mat-icon>{{ clipboard.icon }}</mat-icon>
+      </button>
+      <mat-chip-list *ngIf="schema.readOnly">
+        <mat-chip disableRipple>Read Only</mat-chip>
+      </mat-chip-list>
+      <mat-spinner *ngIf="!loaded" color="accent" diameter="20" @smooth></mat-spinner>
+    </h4>
+    <h6>{{ schema.description }}</h6>
+  </span>
+
+  <span class="space-between"></span>
+
+  <button
+    *ngIf="selectedItems.length > 0"
+    class="delete mat-elevation-z0"
+    mat-icon-button
+    mat-raised-button
+    color="warn"
+    [disabled]="readOnly"
+    [matTooltip]="'Delete ' + selectedItems.length + ' item.'"
+    [matAwareDialog]="{
+      title: 'Attention',
+      templateOrDescription: deleteRowsDialog,
+      answer: 'agree'
+    }"
+    (confirm)="deleteSelectedItems()"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    [matTooltip]="(showScheduled ? 'Hide' : 'Show') + ' scheduled documents'"
+    [color]="showScheduled ? 'accent' : 'secondary'"
+    (click)="toggleScheduled()"
+  >
+    <mat-icon>schedule</mat-icon>
+  </button>
+
+  <button mat-icon-button matTooltip="Toggle columns" [matMenuTriggerFor]="propertiesMenu">
+    <mat-icon>view_column</mat-icon>
+    <mat-menu xPosition="before" #propertiesMenu="matMenu">
+      <button mat-menu-item (click)="$event.stopPropagation()">
+        <mat-checkbox
+          [ngModel]="properties.length == displayedProperties.length"
+          [indeterminate]="
+            displayedProperties.length > 1 && displayedProperties.length < properties.length
+          "
+          (ngModelChange)="toggleDisplayAll($event, schema)"
+        >
+          Display all
+        </mat-checkbox>
+      </button>
+      <mat-divider></mat-divider>
+      <button
+        mat-menu-item
+        disableRipple
+        *ngFor="let property of properties"
+        [disabled]="property.name == '$$spicainternal_select' && readOnly"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-checkbox
+          [disabled]="property.name == '$$spicainternal_select' && readOnly"
+          [ngModel]="displayedProperties.indexOf(property.name) > -1"
+          (ngModelChange)="toggleProperty(property.name, $event)"
+        >
+          {{ property.title }}
+        </mat-checkbox>
+      </button>
+    </mat-menu>
+  </button>
+
+  <button mat-icon-button matTooltip="Change language" [matMenuTriggerFor]="languageMenu">
+    <mat-icon>translate</mat-icon>
+    <mat-menu #languageMenu="matMenu">
+      <ng-template matMenuContent>
+        <button
+          mat-menu-item
+          *ngFor="let languageKv of ($preferences | async)?.language.available | keyvalue"
+          (click)="language = languageKv.key; refresh.next()"
+        >
+          {{ languageKv.value }} ({{ languageKv.key }})
+        </button>
+      </ng-template>
+    </mat-menu>
+  </button>
+
+  <button
+    mat-icon-button
+    matTooltip="Filter data"
+    [matMenuTriggerFor]="filterMenu"
+    [color]="filterer.active ? 'accent' : ''"
+  >
+    <mat-icon>filter_list</mat-icon>
+    <mat-menu class="filter-menu" #filterMenu="matMenu" (click)="$event.stopPropagation()">
+      <bucket-filter
+        #filterer
+        [filter]="filter"
+        [schema]="schema"
+        (filterChange)="this.filter = $event; refresh.emit()"
+      ></bucket-filter>
+    </mat-menu>
+  </button>
+
+  <button mat-icon-button matTooltip="Refresh data" (click)="refresh.next()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <button
+    *ngIf="!readOnly"
+    mat-icon-button
+    canInteract="bucket:data:update"
+    matTooltip="Add new"
+    routerLink="add"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-card class="mat-elevation-z25">
+  <mat-card-content>
+    <mat-table [dataSource]="data$ | async" matSort (matSortChange)="sortChange($event)">
+      <ng-container matColumnDef="$$spicainternal_select">
+        <mat-header-cell class="select" *matHeaderCellDef>
+          <mat-checkbox
+            *ngIf="dataIds?.length > 0"
+            color="primary"
+            [indeterminate]="selectedItems.length < dataIds.length && selectedItems.length > 0"
+            [ngModel]="selectedItems.length == dataIds.length"
+            (ngModelChange)="selectedItems = $event ? [].concat(dataIds) : []"
+          ></mat-checkbox>
+        </mat-header-cell>
+        <mat-cell class="select" *matCellDef="let row">
+          <mat-checkbox
+            color="primary"
+            (ngModelChange)="
+              $event
+                ? selectedItems.push(row._id)
+                : selectedItems.splice(selectedItems.indexOf(row._id), 1)
+            "
+            [ngModel]="selectedItems.indexOf(row._id) > -1"
+          ></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="$$spicainternal_schedule">
+        <mat-header-cell class="scheduled" *matHeaderCellDef>Scheduled</mat-header-cell>
+        <mat-cell class="scheduled" *matCellDef="let row">
+          {{ row._schedule | date: "MMM d, y, h:mm:ss a" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="$$spicainternal_actions">
+        <mat-header-cell class="action" *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell class="action" *matCellDef="let row">
+          <button canInteract="bucket:data:show" mat-icon-button [routerLink]="row._id">
+            <mat-icon>{{ readOnly ? "remove_red_eye" : "edit" }}</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            [disabled]="readOnly"
+            canInteract="bucket:data:update"
+            color="warn"
+            [matAwareDialog]="{
+              title: 'Attention',
+              templateOrDescription: dialogTemplate,
+              answer: 'agree'
+            }"
+            (confirm)="delete(row._id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let property of (schema$ | async)?.properties | keyvalue"
+        [matColumnDef]="property.key"
+      >
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ property.value.title }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row[property.key] }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedProperties"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedProperties"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #deleteRowsDialog let-answer="answer">
+  <p>This action cannot be undone.</p>
+  <p>
+    This action will permanently delete selected <code>{{ selectedItems.length }}</code> rows and
+    break the all relations.
+  </p>
+  <p>
+    Please type in <code>{{ answer }}</code> to confirm.
+  </p>
+</ng-template>
+
+<ng-template #dialogTemplate let-answer="answer">
+  <p>This action cannot be undone.</p>
+  <p>
+    This action will permanently delete the row and break the all relations.
+  </p>
+  <p>
+    Please type in <code>{{ answer }}</code> to confirm.
+  </p>
+</ng-template>

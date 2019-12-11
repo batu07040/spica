@@ -1,0 +1,11 @@
+{
+  "name": "storage",
+  "docs": [
+    {
+      "name": "StorageController",
+      "path": "StorageController",
+      "docType": "controller"
+    }
+  ],
+  "children": []
+}

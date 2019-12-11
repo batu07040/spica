@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    min-height: 120px;
+    max-height: 120px;
+  }
+
+  video {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    min-height: 120px;
+    max-height: 120px;
+  }
+  div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 20px 0;
+    small {
+      text-align: center;
+    }
+  }
+}

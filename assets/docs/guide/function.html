@@ -1,0 +1,390 @@
+<h1 id="function">Function</h1>
+<doc-toc><ul>
+<li><fragment-link url="#overview">Overview</fragment-link></li>
+<li><fragment-link url="#triggers">Triggers</fragment-link></li>
+<li><fragment-link url="#modules-1">Modules</fragment-link></li>
+<li><fragment-link url="#debugging">Debugging</fragment-link></li>
+</ul></doc-toc>
+<h2 id="overview">Overview</h2>
+<h3 id="what-is-the-function">What is the "function"</h3>
+<p>Functions is an event-driven execution context for your spica. Simply, you can attach an event to your function from other modules and services. Your function will be triggered <em>when the event occurs</em>.</p>
+<p>Within a function, you can do almost everything you want to do.</p>
+<blockquote>
+<p>IMPORTANT: Currently the functions, run under the spica and not isolated from it. Which means your function may have stated from the previous execution.</p>
+</blockquote>
+<h3 id="use-cases">Use cases</h3>
+<p>On-demand nature of functions makes it a perfect candidate for event-driven execution.</p>
+<p>See the following table for common <code>functions</code> use cases:</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data processing</td>
+<td>Listen and respond to storage events when a file is created, changed, or removed. Process images, perform video transcoding, validate and transform data, and invoke any service on the internet from your functions.</td>
+</tr>
+<tr>
+<td>Webhooks</td>
+<td>With a simple HTTP call, respond to events originating from 3rd party systems like GitHub, Slack, Stripe.</td>
+</tr>
+<tr>
+<td>APIs</td>
+<td>Compose applications from lightweight, quick and flexible.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events-and-triggers">Events and triggers</h3>
+<p>There are events in the Spica. As an example there is an event when there is a change in the database or receive an HTTP request</p>
+<p>If you attach a trigger to your function, your function will be executed when the event raised.</p>
+<p>Currently, the Functions supports following triggers:</p>
+<ul>
+<li><fragment-link url="#http">HTTP</fragment-link></li>
+<li><fragment-link url="#database">Database</fragment-link></li>
+<li><fragment-link url="#schedule">Schedule</fragment-link></li>
+</ul>
+<h3 id="event-data">Event Data</h3>
+<p>Event trigger will pass the data as parameters to the function when the event raised. The parameters will be different related to the type of event.</p>
+<p>For example a function which has http trigger will look like this:</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request: triggers.http.Request, response: triggers.http.Response</span>) </span>{
+  <span class="hljs-comment">// Send the response</span>
+  response.send({
+    message: <span class="hljs-string">"Spica is awesome!"</span>
+  });
+}</code></pre>
+<p>See <fragment-link url="#triggers">triggers</fragment-link> section for parameter types.</p>
+<h3 id="modules">Modules</h3>
+<p>Spica provides modules to your function in runtime. Modules work like a module in node_modules but not placed in node_modules directory.</p>
+<blockquote>
+<p>NOTE: Modules are not published in a registry like npmjs.com, so you can not install or use outside of a spica.</p>
+</blockquote>
+<p>Currently, there are few modules helps you to get information about your spica.</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@internal/database</code></td>
+<td>This module has a public API for making database operations like <strong>update</strong>, <strong>delete</strong>, <strong>create</strong>, <strong>get</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="triggers">Triggers</h2>
+<h3 id="http">Http</h3>
+<h4 id="overview-1">Overview</h4>
+<p>You can invoke your function with an HTTP request using the <code>POST</code>, <code>PUT</code>, <code>GET</code>, <code>DELETE</code>, <code>PATCH</code>, <code>HEAD</code> and <code>OPTIONS</code> HTTP methods along with a path like <code>/books</code> or <code>/books/:id</code>.</p>
+<p>To able to create a function with HTTP trigger, you need two information;
+Path and Method, the method must be one of the specified HTTP methods above also you need a path like above.</p>
+<blockquote>
+<p>HINT: When you save your function the endpoint will be provisioned automatically.</p>
+<p><strong>IMPORTANT:</strong> The path and method are not validated for any collision with another function's path and method. So make sure that the path and method not used by other functions otherwise you function may override other function's path.</p>
+</blockquote>
+<h4 id="method">Method</h4>
+<p>Http trigger needs an HTTP method to be able to triage requests properly. For more info check out <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" target="_blank" class="external-link">Http Methods</a></p>
+<p>Currently, these methods are valid for use;</p>
+<ul>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+<li><code>PUT</code></li>
+<li><code>DELETE</code></li>
+<li><code>PATCH</code></li>
+<li><code>HEAD</code></li>
+<li><code>OPTIONS</code></li>
+</ul>
+<p>Also, you can use <code>ANY</code> method that covers all methods above which means your function will be executed regardless of the HTTP method of request that bein received.</p>
+<h4 id="path">Path</h4>
+<p>Spica will use the path will use when reserve a trigger URL for your function. When you save your function, the trigger URL will be attached to <strong><code>{API_URL}/fn-execute</code></strong> as suffix URL.</p>
+<p>For example;</p>
+<p><strong><code>/books</code></strong> will be served at <strong><code>/fn-execute/books</code></strong> path</p>
+<p>Also, Path can have a <em>wildcard</em> or a <em>parameter</em> segment.</p>
+<p>Example: <strong><code>/books/:bookId</code></strong> can match with these paths above:</p>
+<ul>
+<li><code>/books/1</code></li>
+<li><code>/books/mybookid</code></li>
+<li><code>/books/getting started with spica</code></li>
+</ul>
+<p>However the <strong><code>/books/:bookId</code></strong> path <strong>will not</strong> match with the paths below:</p>
+<ul>
+<li><code>/books/1/author</code></li>
+<li><code>/books/1/update</code></li>
+</ul>
+<p>Because the path has only one parameter which can match with a sub-segment.</p>
+<h5 id="getting-parameters-in-function-code">Getting parameters in function code</h5>
+<p>The parameters in the trigger path will be passed through the <code>request</code> parameter to your function. It's the first parameter of your function.</p>
+<p>Example:</p>
+<p>For <strong><code>/books/:bookId</code></strong> path, you can access the <strong>bookId</strong> parameter from <strong><code>request.params</code></strong> object.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request: triggers.http.Request, response: triggers.http.Response</span>) </span>{
+  <span class="hljs-comment">// Print the bookId parameter</span>
+  <span class="hljs-built_in">console</span>.log(request.params.bookId);
+  <span class="hljs-comment">// Send the response</span>
+  response.send({
+    bookId: request.params.bookId
+  });
+}</code></pre>
+<p>When you execute this function on <strong><code>/fn-execute/books/1</code></strong> URL, the response will contain the following information</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"bookId"</span>: <span class="hljs-number">1</span>
+}</code></pre>
+<h4 id="request-body">Request Body</h4>
+<p>Usually, every request contains a payload (body) along with the request. It can be either <code>Raw</code> or <code>Text</code> payload. You can access to the payload of the request with <code>request.body</code> property.</p>
+<p>Example function;</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request: triggers.http.Request, response: triggers.http.Response</span>) </span>{
+  <span class="hljs-comment">// A entry will appear in function logs.</span>
+  <span class="hljs-built_in">console</span>.dir(request.body);
+  <span class="hljs-comment">// Send body as response right away</span>
+  response.send(request.body);
+}</code></pre>
+<p>If you send a <code>POST</code> request to this function with following <code>JSON</code> payload; You will get the exact payload to response back because we used <code>request.body</code> as a response payload.</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"The Fall Of Leaves"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">" The Fall Of Leaves is a novel by Turkish author and playwright Resat Nuri Guntekin, written in 1930."</span>,
+  <span class="hljs-attr">"translator"</span>: <span class="hljs-string">"W. D. Halsey"</span>,
+  <span class="hljs-attr">"author"</span>: <span class="hljs-string">"Resat Nuri Guntekin"</span>,
+  <span class="hljs-attr">"year"</span>: <span class="hljs-number">1930</span>
+}</code></pre>
+<p>You need to parse payload to be able to use it in a function.</p>
+<p>"Function" parses the following payload types by default:</p>
+<table>
+<thead>
+<tr>
+<th>Origin</th>
+<th>Content-Type</th>
+<th>Supported</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text</td>
+<td>application/json</td>
+<td>Yes</td>
+<td>Supported by default.</td>
+</tr>
+<tr>
+<td>Raw</td>
+<td>application/bson</td>
+<td>Yes</td>
+<td>Supported by default.</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>application/x-www-form-urlencoded</td>
+<td>No</td>
+<td>Will be supported soon. See issue <a href="https://github.com/spica-engine/spica/issues/28" target="_blank" class="external-link">#28</a>.</td>
+</tr>
+<tr>
+<td>Raw</td>
+<td>multipart/form-data</td>
+<td>No</td>
+<td>Will be supported soon. See issue <a href="https://github.com/spica-engine/spica/issues/28" target="_blank" class="external-link">#28</a>.</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>application/xml</td>
+<td>No</td>
+<td>You need to install an appropriate module to handle request payload.</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>application/yaml</td>
+<td>No</td>
+<td>You need to install an appropriate module to handle request payload.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="database">Database</h3>
+<p>Database trigger, invokes your function when a specific database event raised in a collection of database. The database trigger can invoke your function with <code>INSERT</code>, <code>UPDATE</code>, <code>REPLACE</code>, <code>DELETE</code>, <code>DROP</code> events in a specific database collection. When the event raised, your function will be invoked with the changes in the collection.</p>
+<p>To be able to create a function that triggered by database event, you need two required and one optional information about the event</p>
+<ul>
+<li><strong>Collection:</strong> Name of the collection where the set of documents stored</li>
+<li><strong>Event Type:</strong> Type of the event that happens in the collection. It can be <code>INSERT</code>, <code>UPDATE</code>, <code>REPLACE</code>, <code>DELETE</code>, <code>DROP</code>.</li>
+<li><strong>Full Document:</strong> Whether you want only full document or changes on passed data</li>
+</ul>
+<p>A basic database function looks like this:</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">changes: triggers.database.Changes</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(changes);
+  <span class="hljs-comment">// Business logic here</span>
+}</code></pre>
+<p>In the example code above, changes variable which passed to our function on the first parameter contains all the information about the changes.</p>
+<p>Content of <code>changes</code> variable with the <code>INSERT</code> event and <code>full document</code> option enabled will look like this;</p>
+<pre><code class="hljs language-typescript">{
+  <span class="hljs-string">"operationType"</span>: <span class="hljs-string">"insert"</span>, <span class="hljs-comment">// Type of the event</span>
+  <span class="hljs-string">"clusterTime"</span>: <span class="hljs-number">1563732441</span>, <span class="hljs-comment">// Time of the event occurrence</span>
+  <span class="hljs-string">"fullDocument"</span>: {
+    <span class="hljs-comment">// The newly inserted document</span>
+    <span class="hljs-string">"_id"</span>: <span class="hljs-string">"5d34a9d957b31b06390788ec"</span>,
+    <span class="hljs-string">"wysiwyg"</span>: {<span class="hljs-string">"en_US"</span>: <span class="hljs-string">"dqwdwd"</span>},
+    <span class="hljs-string">"relation"</span>: <span class="hljs-string">"5d132772d5869d9fd24c5985"</span>
+  },
+  <span class="hljs-string">"ns"</span>: {
+    <span class="hljs-comment">// database name and collection name</span>
+    <span class="hljs-string">"db"</span>: <span class="hljs-string">"spica"</span>,
+    <span class="hljs-string">"coll"</span>: <span class="hljs-string">"bucket_5d15d8244a23f73a2a453770"</span>
+  },
+  <span class="hljs-string">"documentKey"</span>: {
+    <span class="hljs-comment">// the id of the inserted document (ObjectId string)</span>
+    <span class="hljs-string">"_id"</span>: <span class="hljs-string">"5d34a9d957b31b06390788ec"</span>
+  }
+}</code></pre>
+<h3 id="schedule">Schedule</h3>
+<p>Schedule trigger invokes your function in a specific time and specific timezone. Fundamentally, schedule trigger is a <a href="https://en.wikipedia.org/wiki/Cron" target="_blank" class="external-link">CRON</a> based trigger that invokes your function in a specific interval based on your CRON expression. Also, when your function invoked, the first parameter of your function will contain a function which basically stops the scheduler in case you don't want your function to be invoked at next tick.</p>
+<p>To create a scheduled function you need a CRON time expression and Time-zone because scheduler schedules your function regardless of the Time-zone of the host machine.</p>
+<p>For example, if you want to run your function at every minute, you need a cron time expression like this <a href="https://crontab.guru/#*_*_*_*_*" target="_blank" class="external-link">* * * * *</a>.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">stop: triggers.schedule.Stop</span>) </span>{
+  <span class="hljs-comment">// Also, note that you do not have to stop your function</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+    <span class="hljs-comment">// Scheduler will stop after first invocation by scheduler</span>
+    stop();
+  }
+  <span class="hljs-comment">// Your business logic</span>
+}</code></pre>
+<p>In the example, we have stopped scheduler so our function won't be invoked next time when scheduler ticks.</p>
+<h4 id="cron-time-expression">Cron Time expression</h4>
+<p>Cron expression made of five-string separated with a whitespace character.</p>
+<pre><code> ┌───────────── minute (0 - 59)
+ │ ┌───────────── hour (0 - 23)
+ │ │ ┌───────────── day of the month (1 - 31)
+ │ │ │ ┌───────────── month (1 - 12)
+ │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday)
+ │ │ │ │ │
+ │ │ │ │ │
+ * * * * *
+</code></pre>
+<blockquote>
+<p>Crontab is a good tool for learning cron expressions. Checkout <a href="https://crontab.guru" target="_blank" class="external-link">CronTab</a></p>
+</blockquote>
+<p>Here is some example of CRON expressions</p>
+<table>
+<thead>
+<tr>
+<th align="center">Expression</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>0 0 1 1 *</code></td>
+<td>Run once a year at midnight of 1 January</td>
+</tr>
+<tr>
+<td align="center"><code>0 0 1 * *</code></td>
+<td>Run once a month at midnight of the first day of the month</td>
+</tr>
+<tr>
+<td align="center"><code>0 0 * * 0</code></td>
+<td>Run once a week at midnight on Sunday morning</td>
+</tr>
+<tr>
+<td align="center"><code>0 0 * * *</code></td>
+<td>Run once a day at midnight</td>
+</tr>
+<tr>
+<td align="center"><code>0 * * * *</code></td>
+<td>Run once an hour at the beginning of the hour</td>
+</tr>
+<tr>
+<td align="center"><code>* * * * *</code></td>
+<td>Run every minute</td>
+</tr>
+</tbody>
+</table>
+<h2 id="modules-1">Modules</h2>
+<h3 id="database-1">Database</h3>
+<p>The database module is an in-memory module that has public API for basic database operations like <code>FIND</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>REPLACE</code>, <code>DELETE</code>, <code>DROP</code>.</p>
+<blockquote>
+<p>Database module imported from <code>@internal/database</code>.</p>
+</blockquote>
+<h4 id="getting-database-service">Getting Database Service</h4>
+<p>You can get database instance with <code>database()</code> function exported from <code>@internal/database</code> module.</p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">const</span> db: Database = database();
+<span class="hljs-comment">// Type of db variable is  Database which exported from `@internal/database`</span></code></pre>
+<h4 id="getting-the-reference-to-a-collection">Getting the reference to a Collection</h4>
+<p>To make changes in a collection you need to get it reference first. You can get reference for a specific collection with <code>Database.collection()</code> function exported by your database instance. For more information check <a href="https://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html" target="_blank" class="external-link">mongoDB API</a></p>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database, Collection} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">const</span> db: Database = database();
+<span class="hljs-keyword">const</span> collection: Collection = db.collection(<span class="hljs-string">"persistent_collection"</span>);</code></pre>
+<h4 id="operations">Operations</h4>
+<p>Here is some fundamental examples;</p>
+<h4 id="insert">Insert</h4>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database, Collection} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> db: Database = database();
+  <span class="hljs-keyword">const</span> books: Collection = db.collection(<span class="hljs-string">"books"</span>);
+
+  <span class="hljs-comment">// insertOne will return Promise&#x3C;void></span>
+  <span class="hljs-keyword">await</span> books.insertOne({
+    name: <span class="hljs-string">"The Fall Of Leaves"</span>,
+    translator: <span class="hljs-string">"W. D. Halsey"</span>,
+    available_in: [<span class="hljs-string">"English"</span>, <span class="hljs-string">"Turkish"</span>]
+    author: <span class="hljs-string">"Resat Nuri Guntekin"</span>,
+    year: <span class="hljs-number">1930</span>
+  });
+}</code></pre>
+<h4 id="find">Find</h4>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database, Collection} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> db: Database = database();
+  <span class="hljs-keyword">const</span> books: Collection = db.collection(<span class="hljs-string">"books"</span>);
+
+  <span class="hljs-comment">// Get all books</span>
+  <span class="hljs-keyword">const</span> allBooks = <span class="hljs-keyword">await</span> books.find().toArray();
+  <span class="hljs-built_in">console</span>.dir(allBooks);
+  <span class="hljs-comment">// Above code will print [{ name: "The Fall Of Leaves", ... }]</span>
+
+  <span class="hljs-keyword">const</span> writtenAfter19StCentury = <span class="hljs-keyword">await</span> books.find({year: {$gte: <span class="hljs-number">2000</span>}}).toArray();
+  <span class="hljs-built_in">console</span>.dir(writtenAfter19StCentury);
+  <span class="hljs-comment">// Result will be empty array.</span>
+}</code></pre>
+<blockquote>
+<p>NOTE: <code>find</code> method accepts <a href="https://docs.mongodb.com/manual/reference/operator/query/" target="_blank" class="external-link">Query and Projection Operators</a></p>
+</blockquote>
+<h4 id="find-one">Find One</h4>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database, Collection} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> db: Database = database();
+  <span class="hljs-keyword">const</span> books: Collection = db.collection(<span class="hljs-string">"books"</span>);
+
+  <span class="hljs-comment">// Find the book named The Fall Of Leaves</span>
+  <span class="hljs-keyword">const</span> book = <span class="hljs-keyword">await</span> books.findOne({name: <span class="hljs-string">"The Fall Of Leaves"</span>});
+  <span class="hljs-built_in">console</span>.dir(book);
+  <span class="hljs-comment">// Result will be { name: "The Fall Of Leaves", ... }</span>
+}</code></pre>
+<h4 id="update">Update</h4>
+<pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> {database, Database, Collection} <span class="hljs-keyword">from</span> <span class="hljs-string">"@internal/database"</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> db: Database = database();
+  <span class="hljs-keyword">const</span> books: Collection = db.collection(<span class="hljs-string">"books"</span>);
+
+  <span class="hljs-comment">// Find the book named The Fall Of Leaves</span>
+  <span class="hljs-keyword">const</span> book = <span class="hljs-keyword">await</span> books.findOne({name: <span class="hljs-string">"The Fall Of Leaves"</span>});
+
+  <span class="hljs-comment">// If the book found then update it's published year</span>
+  <span class="hljs-keyword">if</span> (book) {
+    book.year = <span class="hljs-number">2000</span>;
+    <span class="hljs-comment">// Update whole document with $set</span>
+    <span class="hljs-keyword">await</span> books.update({name: book.name}, {$<span class="hljs-keyword">set</span>: book});
+  }
+}</code></pre>
+<h2 id="debugging">Debugging</h2>
+<p>An unhandled error will crash your function, when the error happens it will be logged to function logs.</p>
+<h3 id="executing">Executing</h3>
+<p>A function can be executed standalone for testing. If your function saved, a button will appear above your function's code.</p>
+<p>The Run button executes your function with stub parameters. Stub parameters contains all common properties and functions from trigger.</p>
+<p>When you run a function, you will see whether the execution succeeded or failed. Also you will see all the logs from execution above your function editor.</p>
+<h3 id="logging">Logging</h3>
+<p>A function code can have statements like <code>console.log</code>, <code>console.warn</code>, <code>console.dir</code>, when a code calls a console function the output of log will be written to function's log file.</p>
+<p>You can see the logs in Logs tab in code edit page.</p>

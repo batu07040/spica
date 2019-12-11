@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  min-height: 530px !important;
+
+  mat-grid-list {
+    mat-grid-tile {
+      storage-view {
+        height: 100%;
+        ::ng-deep {
+          img,
+          video {
+            height: 100%;
+            max-height: unset;
+            min-height: unset;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p {
+              margin-left: 10px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

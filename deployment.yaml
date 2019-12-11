@@ -1,0 +1,165 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: database
+spec:
+  serviceName: mongo
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      terminationGracePeriodSeconds: 10
+      initContainers:
+        - name: init
+          image: spicaengine/initcontainer:master
+          imagePullPolicy: Always
+      containers:
+        - name: mongo
+          image: mongo:4.2
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "250m"
+          command:
+            - mongod
+            - "--replSet"
+            - rs0
+            - "--bind_ip_all"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: database-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: database-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 27017
+      targetPort: 27017
+  clusterIP: None
+  selector:
+    app: database
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: spica
+spec:
+  serviceName: spica
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spica
+    spec:
+      containers:
+        - name: spica
+          image: spicaengine/spica:master
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "20Mi"
+              cpu: "20m"
+          ports:
+            - containerPort: 80
+        - name: api
+          image: spicaengine/api:master
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4300
+          env:
+            - name: PORT
+              value: "4300"
+            - name: DATABASE_URI
+              value: mongodb://database-0.mongo.default.svc.cluster.local,database-1.mongo.default.svc.cluster.local,database-2.mongo.default.svc.cluster.local
+            - name: REPLICA_SET
+              value: rs0
+            - name: DATABASE_NAME
+              value: spica
+            - name: SECRET
+              value: $2b$10$shOzfYpDCy.RMgsVlwdQeONKGGzaBTfTQAjmXQNpMp4aKlLXrfZ/C
+            - name: DEFAULT_PASSWORD
+              value: spica
+            - name: PUBLIC_HOST
+              value: "https://master.spicaengine.com/api"
+            - name: PERSISTENT_PATH
+              value: /data
+          volumeMounts:
+            - name: spica-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: spica-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spica
+spec:
+  type: NodePort
+  ports:
+    - name: spica
+      port: 80
+      targetPort: 80
+    - name: api
+      port: 4300
+      targetPort: 4300
+  selector:
+    app: spica
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - master.spicaengine.com
+      secretName: master-spicaengine
+  rules:
+    - host: master.spicaengine.com
+      http:
+        paths:
+          - path: /spica/?(.*)
+            backend:
+              serviceName: spica
+              servicePort: 80
+          - path: /api/?(.*)
+            backend:
+              serviceName: spica
+              servicePort: 4300

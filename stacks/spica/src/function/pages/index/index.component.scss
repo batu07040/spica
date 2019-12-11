@@ -1,0 +1,39 @@
+:host {
+  mat-toolbar {
+    min-height: 250px;
+    padding: 0 30px;
+    align-items: flex-start;
+    .space-between {
+      flex: 1 1 auto;
+    }
+    h4 {
+      mat-icon,
+      span {
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+    }
+  }
+  mat-header-cell.action,
+  mat-cell.action {
+    max-width: 150px;
+    justify-content: flex-end;
+  }
+
+  mat-card {
+    margin: 30px;
+    margin-top: -110px;
+    overflow: hidden;
+
+    mat-card-content {
+      mat-table {
+        mat-header-cell.info,
+        mat-cell.info,
+        mat-header-cell.name,
+        mat-cell.name {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

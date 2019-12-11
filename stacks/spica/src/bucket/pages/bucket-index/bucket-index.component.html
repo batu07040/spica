@@ -1,0 +1,79 @@
+<mat-toolbar color="primary">
+  <h4 class="mat-h4">
+    <mat-icon>view_day</mat-icon>
+    <span>Buckets</span>
+  </h4>
+  <span class="space-between"></span>
+  <button canInteract="bucket:update" mat-icon-button routerLink="add">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button mat-icon-button routerLink="settings">
+    <mat-icon>settings</mat-icon>
+  </button>
+  <button mat-button routerLink="import-export">
+    <mat-icon>import_export</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="drag-container" cdkDropListGroup>
+  <div
+    cdkDropList
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped()"
+  ></div>
+  <div
+    cdkDropList
+    *ngFor="let bucket of buckets"
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped()"
+  >
+    <mat-card class="drag-box mat-elevation-1" cdkDrag (cdkDragMoved)="dragMoved($event)">
+      <mat-card-title>
+        <mat-icon>{{ bucket.icon }}</mat-icon>
+        <span>{{ bucket.title }}</span>
+        <span class="space-between"></span>
+        <button
+          mat-icon-button
+          #clipboard="matClipboard"
+          [matClipboard]="bucket._id"
+          [matTooltip]="'Copied!'"
+          (mouseenter)="$event.stopImmediatePropagation()"
+          (click)="tooltip.toggle()"
+          #tooltip="matTooltip"
+        >
+          <mat-icon>{{ clipboard.icon }}</mat-icon>
+        </button>
+      </mat-card-title>
+      <mat-card-content>
+        <p>{{ bucket.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button canInteract="bucket:show" mat-icon-button [routerLink]="bucket._id">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          canInteract="bucket:update"
+          mat-icon-button
+          color="warn"
+          [matAwareDialog]="{
+            title: 'Confirmation',
+            templateOrDescription: dialogTemplate,
+            answer: bucket.title?.toLowerCase()
+          }"
+          (confirm)="delete(bucket)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #dialogTemplate let-answer="answer">
+  <p>This action cannot be undone.</p>
+  <p>
+    This action will permanently delete the <code>{{ answer }}</code> and
+    <b>break the all relations</b>.
+  </p>
+  <p>Please type in the name of the bucket to confirm.</p>
+</ng-template>

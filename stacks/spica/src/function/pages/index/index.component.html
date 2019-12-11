@@ -1,0 +1,109 @@
+<mat-toolbar color="primary">
+  <h4 class="mat-h4">
+    <mat-icon>memory</mat-icon>
+    <span>Functions</span>
+  </h4>
+  <span class="space-between"></span>
+  <button mat-icon-button (click)="refresh()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button canInteract="function:create" mat-icon-button routerLink="add">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-card class="mat-elevation-z25">
+  <mat-card-content>
+    <mat-table [dataSource]="$data">
+      <ng-container matColumnDef="_id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let function">{{ function._id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell class="name" *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell class="name" *matCellDef="let function">{{ function.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>
+          Description
+        </mat-header-cell>
+        <mat-cell *matCellDef="let function">
+          {{ function.description }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="info">
+        <mat-header-cell class="info" *matHeaderCellDef>
+          Info
+        </mat-header-cell>
+        <mat-cell class="info" *matCellDef="let function">
+          <ng-container *ngFor="let infoKv of function.info | keyvalue">
+            <ng-container *ngFor="let info of infoKv.value">
+              <a
+                *ngIf="info.type == 'url'"
+                mat-icon-button
+                mat-flat-button
+                [attr.href]="info.url"
+                target="_blank"
+                [matTooltip]="info.text"
+              >
+                <mat-icon>{{ info.icon }}</mat-icon>
+              </a>
+              <button
+                *ngIf="info.type == 'label'"
+                mat-icon-button
+                mat-flat-button
+                [matTooltip]="info.text"
+              >
+                <mat-icon>{{ info.icon }}</mat-icon>
+              </button>
+            </ng-container>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell class="action" *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell class="action" *matCellDef="let function">
+          <button
+            canInteract="function:update"
+            mat-icon-button
+            [routerLink]="function._id"
+            matTooltip="Edit"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button [routerLink]="function._id + '/logs'" matTooltip="Logs">
+            <mat-icon>bug_report</mat-icon>
+          </button>
+          <button
+            canInteract="function:delete"
+            mat-icon-button
+            color="warn"
+            matTooltip="Delete"
+            [matAwareDialog]="{
+              title: 'Attention',
+              templateOrDescription: dialogTemplate,
+              answer: function.name
+            }"
+            (confirm)="delete(function._id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #dialogTemplate let-answer="answer">
+  <p>This action cannot be undone.</p>
+  <p>
+    This action will permanently delete the <code>{{ answer }}</code> function.
+  </p>
+  <p class="mat-body">Please type in the name of the function to confirm.</p>
+</ng-template>

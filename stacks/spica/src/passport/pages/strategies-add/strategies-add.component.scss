@@ -1,0 +1,16 @@
+:host {
+  mat-card {
+    padding: 25px;
+    margin: 30px;
+    overflow: hidden;
+  }
+  mat-form-field {
+    width: 100%;
+  }
+  textarea {
+    height: 350px;
+  }
+  mat-form-field.custom-type {
+    margin-top: 20px;
+  }
+}

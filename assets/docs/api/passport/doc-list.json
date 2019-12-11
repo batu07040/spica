@@ -1,0 +1,21 @@
+{
+  "name": "passport",
+  "docs": [
+    {
+      "name": "IdentityController",
+      "path": "IdentityController",
+      "docType": "controller"
+    },
+    {
+      "name": "PassportController",
+      "path": "PassportController",
+      "docType": "controller"
+    },
+    {
+      "name": "PolicyController",
+      "path": "PolicyController",
+      "docType": "controller"
+    }
+  ],
+  "children": []
+}

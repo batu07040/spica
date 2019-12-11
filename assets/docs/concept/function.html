@@ -1,0 +1,29 @@
+<h1 id="function">Function</h1>
+<doc-toc><ul>
+<li><fragment-link url="#concept">Concept</fragment-link></li>
+<li><fragment-link url="#triggers">Triggers</fragment-link></li>
+<li><fragment-link url="#dependencies">Dependencies</fragment-link></li>
+<li><fragment-link url="#environment-variables">Environment Variables</fragment-link></li>
+</ul></doc-toc>
+<h2 id="concept">Concept</h2>
+<p>You can use functions to apply custom logic in your projects. You can find the function area in <strong>Developer Area</strong>. Once you create your function, the system will assign ID automatically. To create a function you need to define a name and description first. This data will be displayed in the function list. After you define metadata, you will see the code editor which you can write your own codes. </p>
+<h2 id="triggers">Triggers</h2>
+<p>The system will run this code whenever something triggers to function. There are different types of triggers.</p>
+<h3 id="database">Database</h3>
+<p>When something has been changed in a specific resource such as bucket or policies, it triggers to function.</p>
+<blockquote>
+<p>NOTE: You can toggle on “Full Document” setting if you want to get all entry. If you toggle off this setting, you will get changes only.</p>
+</blockquote>
+<h3 id="http">HTTP</h3>
+<p>HTTP request will trigger the function.</p>
+<h3 id="schedule">Schedule</h3>
+<p>You can run functions in time intervals. To set interval, you can use CRON base rules. As an example: if you set time interval "<code>* * * * *</code>", function will be executed in every minute.</p>
+<h3 id="firehose">Firehose</h3>
+<p>Firehose is a low latency, event based and realtime trigger. It communicates through an open socket connection which makes low latency communication possible. You can communicate with Firehose on bidirectional I/O events.</p>
+<p>An event can contain two parameters; Event Name and Event Data</p>
+<p>Event Name: <code>string</code>
+Event Data: <code>any</code></p>
+<h2 id="dependencies">Dependencies</h2>
+<p>If your function needs another 3rd party package, you can include 3rd party package as a dependency. Each dependency will be imported before the system runs the function.</p>
+<h2 id="environment-variables">Environment Variables</h2>
+<p>Also, you can set environment variables and these variables will be passed to function as a global parameter. To get more detail please visit API reference.</p>

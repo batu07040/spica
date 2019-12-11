@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <h4 class="mat-h4">
+    <mat-icon>settings</mat-icon>
+    Settings
+  </h4>
+</mat-toolbar>
+
+<mat-card class="mat-elevation-z25">
+  <mat-card-content>
+    {{ settings | json }}
+    <mat-list>
+      <h3 mat-subheader>Available languages</h3>
+      <mat-list-item *ngFor="let languageKv of settings?.language.available | keyvalue">
+        <mat-icon
+          mat-list-icon
+          [color]="settings?.language.default == languageKv.key ? 'warn' : 'primary'"
+          matTooltip="This is default language"
+          [matTooltipDisabled]="settings?.language.default != languageKv.key"
+          >language
+        </mat-icon>
+        <h4 mat-line>{{ languageKv.value }} ({{ languageKv.key }})</h4>
+      </mat-list-item>
+    </mat-list>
+
+    <form ngForm #addForm="ngForm">
+      <div class="hint-message">There goes language and other bucket settings</div>
+      <mat-form-field>
+        <mat-label>Choose Language</mat-label>
+        <mat-select ngModel #selectedLanguage="ngModel" name="lang">
+          <mat-option *ngFor="let language of languages" [value]="language.code">
+            {{ language.name }} ({{ language.code }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <button
+      mat-button
+      [disabled]="addForm.invalid || settings.language.available[selectedLanguage.value]"
+      (click)="addLanguage(selectedLanguage.value)"
+    >
+      <mat-icon>add</mat-icon> Add new language
+    </button>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="updateSettings()"><mat-icon>sync</mat-icon> Update</button>
+  </mat-card-actions>
+</mat-card>

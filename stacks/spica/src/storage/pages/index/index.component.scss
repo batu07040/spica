@@ -1,0 +1,69 @@
+::ng-deep .preview-file {
+  position: relative !important;
+  .mat-dialog-container {
+    height: unset;
+  }
+}
+
+:host {
+  mat-toolbar {
+    min-height: 250px;
+    padding: 0 30px;
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    .space-between {
+      flex: 1 1 auto;
+    }
+    h4 {
+      mat-icon,
+      span {
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+    }
+    button {
+      padding: 0;
+      min-width: 40px;
+      input {
+        display: none;
+      }
+    }
+  }
+
+  mat-grid-list {
+    margin: 30px;
+    margin-top: -110px;
+    overflow: hidden;
+
+    mat-card {
+      width: 100%;
+      padding-top: 0px;
+      overflow: hidden;
+      mat-card-subtitle {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      mat-card-content {
+        margin-bottom: 0;
+        [mat-card-image] {
+          margin-top: unset;
+        }
+      }
+      mat-card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        mat-label {
+          white-space: nowrap;
+          overflow: hidden;
+          flex: 1;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}

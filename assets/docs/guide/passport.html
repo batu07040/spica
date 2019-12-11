@@ -1,0 +1,129 @@
+<h1 id="passport">Passport</h1>
+<p>Fundamentally, this module is used for authenticating and authorizing users (a.k.a. Indentities) on Spica Client and API.</p>
+<h2 id="identities">Identities</h2>
+<p>Identities are the main entities of your Spica. They are basically profiles with custom properties and login information. You can attach Policies (see below) and restrict their access to the Spica.</p>
+<h3 id="authentication-with-spica">Authentication With Spica</h3>
+<h4 id="with-api-call">With API Call</h4>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/passport/identify?password={password}&#x26;identifier={unique identifiier}"</p>
+</blockquote>
+<p>If the credentials on request URL are correct, Spica returns the following response:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"spica:passport"</span>,
+  <span class="hljs-attr">"token"</span>: <span class="hljs-string">"JWT {jwt token}"</span>,
+  <span class="hljs-attr">"schema"</span>: <span class="hljs-string">"JWT"</span>
+}</code></pre>
+<p>"<code>token</code>", created by your Spica instance, contains the following informations when decrypted on its payload:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d14f92e0617f15b1bc7d1b2"</span>, // Id string of the Identity
+  <span class="hljs-attr">"identifier"</span>: <span class="hljs-string">"spica"</span>,
+  <span class="hljs-attr">"policies"</span>: [...], // Array of the identitiy's Policy Ids
+  <span class="hljs-attr">"iat"</span>: <span class="hljs-number">1562668335</span>, // Creationg date of the token
+  <span class="hljs-attr">"exp"</span>: <span class="hljs-number">1562841135</span>, // Expiration date of the token
+  <span class="hljs-attr">"aud"</span>: <span class="hljs-string">"spica.io"</span>,
+  <span class="hljs-attr">"iss"</span>: <span class="hljs-string">"https://example.com"</span> // Issuer domain of this JWT token. Mostly this will be the base url of your Spica instance
+}</code></pre>
+<p>To authonticate every request to Spica API, attach the <code>token</code> to the <code>Authorization</code> header of your request. If you send request with empty <code>Authorization</code> header, Spica returns <code>401 Unauthorized</code> error.</p>
+<h3 id="define-identity-properties">Define Identity Properties</h3>
+<p>Here in Spica, Identities are dynamic and changeable domains.</p>
+<p>By default, an Identity object has these properties:</p>
+<ul>
+<li>Identifier: A unique, string type property which is used for logging in.</li>
+<li>Password: User-defined password for authentication.</li>
+<li>First and Last Name</li>
+<li>Email</li>
+</ul>
+<p>If you want more properties, you can go the Settings page of Passport and add custom properties to your Identities.</p>
+<p>Click the <code>+</code> icon on the Settings page. This will add a string type new property. You can customize the property by changing the <code>Title</code>, <code>Description</code> and even the <code>Type</code> of the property.</p>
+<h3 id="list-identities">List Identities</h3>
+<h4 id="with-client">With Client</h4>
+<p>You can find the list of your Identities by clicking on the <strong>Identities</strong> from the side menu or by going to the <code>/passport/identity</code> URL. If you've just initialized the Spica, the list would be empty (or with a default <code>spica</code> identity depending on your setup configurations.).</p>
+<p>Here, you can edit (<code>pen</code> button), create (<code>plus</code> button) and delete (<code>trash</code> button) your Identities.</p>
+<h4 id="with-api-call-1">With API Call</h4>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/passport/identity?{params}"</p>
+</blockquote>
+<p>Returns paginated <code>Identity</code> Array.</p>
+<p>Params:<br>
+All the params below are optional.</p>
+<p><code>"limit"</code>: Accepts number value. Limits the data count on listing array.</p>
+<p><code>"skip"</code>: Skips number of entries before listing.</p>
+<p>Example response:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"meta"</span>: {<span class="hljs-attr">"total"</span>: <span class="hljs-number">1</span>},
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d137e13570fbca9e0e9ff42"</span>,
+      <span class="hljs-attr">"identifier"</span>: <span class="hljs-string">"spica"</span>,
+      <span class="hljs-attr">"password"</span>: <span class="hljs-string">"$2a$10$wibvsNsOxEVDj5Pl2EJnme.rhEV5vRIhOExhXvNCrCXIdRzr6F5TG"</span>,
+      <span class="hljs-attr">"policies"</span>: [
+        <span class="hljs-string">"PassportFullAccess"</span>,
+        <span class="hljs-string">"IdentityFullAccess"</span>,
+        <span class="hljs-string">"StorageFullAccess"</span>,
+        <span class="hljs-string">"PolicyFullAccess"</span>,
+        <span class="hljs-string">"FunctionFullAccess"</span>,
+        <span class="hljs-string">"SubscriptionFullAccess"</span>,
+        <span class="hljs-string">"BucketFullAccess"</span>
+      ]
+    }
+  ]
+}</code></pre>
+<h3 id="create-an-identity">Create an Identity</h3>
+<h4 id="with-client-1">With Client</h4>
+<p>To create a new Identity, click on the <code>+</code> button on Identities list page or go to <code>/passport/identity/add</code> url.</p>
+<p>By filling the form on the page, you can create a new Identity. After the creation, you can access the Policies of the Identity. (See below)</p>
+<h4 id="with-api-call-2">With API Call</h4>
+<p>Request URL:</p>
+<blockquote>
+<p>POST "{baseUrl}/passport/identities?{params}"</p>
+</blockquote>
+<p>Example request body:</p>
+<h2 id="policies">Policies</h2>
+<p>Policies are basically a set of rules which can be attached to your Identities to capsulate their behavior.</p>
+<p>Policies made from <code>Statements</code>, the primitive rules.</p>
+<p>First, let's check out the BucketFullAccess policy:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"$schema"</span>: <span class="hljs-string">"http://spica.internal/passport/policy"</span>,
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"BucketFullAccess"</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Bucket Full Access"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Full access to bucket service."</span>,
+  <span class="hljs-attr">"statement"</span>: [
+    {
+      <span class="hljs-attr">"effect"</span>: <span class="hljs-string">"allow"</span>,
+      <span class="hljs-attr">"action"</span>: <span class="hljs-string">"bucket:*"</span>,
+      <span class="hljs-attr">"resource"</span>: <span class="hljs-string">"bucket/*"</span>,
+      <span class="hljs-attr">"service"</span>: <span class="hljs-string">"bucket"</span>
+    },
+    {
+      <span class="hljs-attr">"effect"</span>: <span class="hljs-string">"allow"</span>,
+      <span class="hljs-attr">"action"</span>: <span class="hljs-string">"bucket:data:*"</span>,
+      <span class="hljs-attr">"resource"</span>: <span class="hljs-string">"bucket:data/*"</span>,
+      <span class="hljs-attr">"service"</span>: <span class="hljs-string">"bucket:data"</span>
+    }
+  ]
+}</code></pre>
+<p>This Policy lets the Identity to <code>index</code>, <code>show</code>, <code>update</code> and <code>delete</code> both Bucket and Bucket Data.</p>
+<blockquote>
+<p>Note: Asterisk (<code>*</code>) stands for every actions/resources under a scope.</p>
+</blockquote>
+<h3 id="managing-policies">Managing Policies</h3>
+<h3 id="creating-custom-policies">Creating Custom Policies</h3>
+<p>So, you want more control over your Identities? Well... you can. You can create your own Custom Policy by clicking on the <code>+</code> button on Policies page to create from scratch or clone a Policy and start to work where it left off by clicking the <code>copy</code> button on Policies page next to each policy.</p>
+<p>Here you can enter your Policy's <code>Name</code> and <code>Description</code>.</p>
+<p>Click on <code>Add Statement</code> button to add new statement. You'll see a new statement added to list in that page. You'll see a new form to fill. Let's dig in.</p>
+<p><code>Effect</code>: If you want to restrict a certain sets of rules, set the Effect as <code>Deny</code>, otherwise select <code>Allow</code>.</p>
+<p><code>Service</code>: Select the scope of the Statement.</p>
+<p><code>Actions</code>: After selecting the scope, this input will show up. You'll see a list of actions on the selected scope. Select one or more actions to add them to your Statement.</p>
+<p><code>Add Resource</code>: Optional. If you want to allow/deny actions on resource based, add resource and enter the _id of the resource. You can add infinite number of resources to a Statement.</p>
+<!-- ### Understanding Statements
+
+Statements are simple rules which allows/denies _actions_ such as `bucket:show`, `passport:identity:index` etc.
+
+There are a few types of actions:
+
+- `*:index`: Listing entries
+- `*:show`: Getting single entry
+- `*:update`: Updating or creating one entry
+- `*:delete`: Deleting entry or entries -->

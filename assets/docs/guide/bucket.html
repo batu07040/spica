@@ -1,0 +1,240 @@
+<h1 id="bucket">Bucket</h1>
+<doc-toc><ul>
+<li><fragment-link url="#bucket-1">Bucket</fragment-link><ul>
+<li><fragment-link url="#list">List</fragment-link></li>
+<li><fragment-link url="#create-and-edit">Create and Edit</fragment-link></li>
+<li><fragment-link url="#delete">Delete</fragment-link></li>
+<li><fragment-link url="#localization">Localization</fragment-link></li>
+</ul></li>
+<li><fragment-link url="#bucket-entries">Bucket Entries</fragment-link><ul>
+<li><fragment-link url="#list-1">List</fragment-link></li>
+<li><fragment-link url="#create-and-edit-1">Create and Edit</fragment-link></li>
+<li><fragment-link url="#history">History</fragment-link></li>
+<li><fragment-link url="#import--export">Import &#x26; Export</fragment-link></li>
+</ul></li>
+</ul></doc-toc>
+<h1 id="bucket-1">Bucket</h1>
+<p>Buckets are schemas of your data. They keep all the necessary information about your data such as their structure, validations.</p>
+<h2 id="list">List</h2>
+<h3 id="with-client">With Client</h3>
+<p>You can find the list of your Bucket by clicking on the <strong>Bucket</strong> from the side menu under the Developer section. If you've just initialized the Spica, the list would be empty.</p>
+<h3 id="with-api">With API</h3>
+<p>URL of request:</p>
+<blockquote>
+<p>GET "{baseUrl}/bucket"</p>
+</blockquote>
+<p>Example response:</p>
+<pre><code class="hljs language-json">[
+  {
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d1c60f9e3f4ee1a938c294c"</span>,
+    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Example Bucket"</span>,
+    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Example bucket for Documentation"</span>,
+    <span class="hljs-attr">"primary"</span>: <span class="hljs-string">"title"</span>,
+    <span class="hljs-attr">"properties"</span>: {
+      <span class="hljs-attr">"title"</span>: {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"title"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Title of the row"</span>,
+        <span class="hljs-attr">"options"</span>: {
+          <span class="hljs-attr">"position"</span>: <span class="hljs-string">"left"</span>,
+          <span class="hljs-attr">"visible"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-attr">"translate"</span>: <span class="hljs-literal">true</span>
+        }
+      },
+      <span class="hljs-attr">"description"</span>: {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"textarea"</span>,
+        <span class="hljs-attr">"title"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Description of the row"</span>,
+        <span class="hljs-attr">"options"</span>: {<span class="hljs-attr">"position"</span>: <span class="hljs-string">"right"</span>}
+      }
+    }
+  }
+]</code></pre>
+<h2 id="create-and-edit">Create and Edit</h2>
+<p>To define your data models on your application, you have to define your data models known as Buckets. You can create and edit directly from your Spica Client or via API calls.</p>
+<h3 id="with-client-1">With Client</h3>
+<p>To create a new Bucket, go to Bucket listing page and find the plus (<code>+</code>) icon. Clicking it will take you to Bucket creation page. Or if you want to edit one of your Buckets, on listing page find the desired Bucket and click the <code>pen</code> icon next to it.</p>
+<p>Bucket Create/Edit form divides into a few sections.</p>
+<h4 id="top-bar-and-describe">Top Bar and Describe</h4>
+<p>On top bar you'll see and icon as default. You can click to change the icon of the Bucket. That icon will be shown on the sidebar next to the Bucket title.</p>
+<p>To save the Bucket, you have to enter a Title and a Description to explain the Bucket's purpose. While the Title is limited with 15 characters, Description is limited with 250.</p>
+<h4 id="properties">Properties</h4>
+<p>Here, in this section, you will define what kind of data the Bucket will hold. By default, Description and Title properties are created. You can delete those properties by clicking the red <code>trash</code> icon to start with a blank Bucket.</p>
+<p>To enter a new property, find the text-box with "Enter a property name" placeholder. Enter a unique, lowercase property name and then click the button next to it to save.</p>
+<blockquote>
+<p>Remember: Spica stores the property names as JSON keys. For this, special characters, spaces and such are forbidden.</p>
+</blockquote>
+<p>You'll see the name of the newly created property is added to the list. Click on it to edit the property and its options.</p>
+<h4 id="view">View</h4>
+<p>You can customize the Bucket Data Create/Edit page from this section. <code>Left</code>, <code>Right</code> and <code>Bottom</code> represent the divisions of the layout on Bucket Data Create/Edit page.</p>
+<p>You can drag and drop the Bucket Properties to desired division.</p>
+<blockquote>
+<p>Remember: You can't save a Bucket if you left one or more Properties on <code>No Position</code> list.</p>
+</blockquote>
+<h3 id="with-api-1">With API</h3>
+<blockquote>
+<p>Remember: If you want to create a new Bucket, don't include the <code>_id</code> property to the body of your request.</p>
+</blockquote>
+<p>URL of the request:</p>
+<blockquote>
+<p>POST "{baseUrl}/bucket"</p>
+</blockquote>
+<p>Example request body:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d1c60f9e3f4ee1a938c294c"</span>,
+  <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Test"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Test with History Props"</span>,
+  <span class="hljs-attr">"icon"</span>: <span class="hljs-string">"view_stream"</span>,
+  <span class="hljs-attr">"primary"</span>: <span class="hljs-string">"title"</span>,
+  <span class="hljs-attr">"properties"</span>: {
+    <span class="hljs-attr">"title"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Title"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Title of the row"</span>,
+      <span class="hljs-attr">"options"</span>: {<span class="hljs-attr">"position"</span>: <span class="hljs-string">"left"</span>, <span class="hljs-attr">"visible"</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">"translate"</span>: <span class="hljs-literal">true</span>}
+    },
+    <span class="hljs-attr">"description"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"textarea"</span>,
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Description"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Description of the row"</span>,
+      <span class="hljs-attr">"options"</span>: {<span class="hljs-attr">"position"</span>: <span class="hljs-string">"right"</span>}
+    }
+  }
+}</code></pre>
+<h3 id="property-options">Property Options</h3>
+<p><code>"positions"</code>: This option determines the input position of the related property on Bucket Data edit and create page. In this version, Spica supports <code>left</code>, <code>right</code> and <code>bottom</code> positions.</p>
+<p><code>"required"</code>: Makes the related property required. If it's <code>true</code>, you can't create/edit Bucket's entries without its related property.</p>
+<p><code>"visible"</code>: Boolean value to show the related property in listing page on Spica Client.</p>
+<blockquote>
+<p>Remember: Only the primitive type properties can be shown on list. For example; <code>object</code>, <code>array</code> type properties can't be marked as <code>visible</code>.</p>
+</blockquote>
+<p><code>"translate"</code>: Boolean value to make the related Bucket property localizable.</p>
+<blockquote>
+<p>Remember: Once you set the this option as <code>true</code>, you can't change it later. Go to <em>Localization with Spica</em> section to learn more.</p>
+</blockquote>
+<p><code>"readOnly"</code>: Also boolean. Makes its related property read only field. After it is set as <code>true</code>, you can't create/edit Bucket's that property.</p>
+<h2 id="delete">Delete</h2>
+<blockquote>
+<p>Remember: This action is irreversible. Bucket entries and their histories will be deleted along with the Bucket.</p>
+</blockquote>
+<h3 id="with-client-2">With Client</h3>
+<p>To delete Bucket; go to the Bucket listing page, find the Bucket you want to create and click on the red <code>trash</code> icon. A dialog will pop up to confirm this action. Follow the instruction on dialog and click on <code>Confirm</code> button.</p>
+<h3 id="with-api-2">With API</h3>
+<p>URL of request:</p>
+<blockquote>
+<p>DELETE "{baseUrl}/bucket/{bucket _id}"</p>
+</blockquote>
+<h2 id="localization">Localization</h2>
+<h3 id="adding-language">Adding Language</h3>
+<p>As default, the newly created Spica instance has only a language, English. If you want to add another language, you can go the Bucket Preferences and select the language you want from the select box and click the <code>Add Language</code> button.</p>
+<blockquote>
+<p>Warning: You can't delete a language from a Spica instance.</p>
+</blockquote>
+<h3 id="making-translatable-fields">Making Translatable Fields</h3>
+<p>To add localization to a property, click the <code>cog</code> icon next to the property title in the Bucket Add or Edit page, check the <code>Translate</code> checkbox.</p>
+<blockquote>
+<p>Warning: Think carefully before adding localization to a property. Once you add localization, you can't revert that change.</p>
+<p>Note: Only the following type of properties can have localization; <code>string</code>, <code>textarea</code> and <code>richtext</code></p>
+</blockquote>
+<p>Once you save the Bucket, go to the Bucket Data Add page and you'll see a language selection next to the input of the multilingual property. You can select desired language code, entering a value and switch to another language and so on.</p>
+<p>The final form of a multilingual property will be like this:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"text"</span>: {
+    <span class="hljs-attr">"en_US"</span>: <span class="hljs-string">"This is some text in English."</span>,
+    <span class="hljs-attr">"es_ES"</span>: <span class="hljs-string">"Este es un texto en Español."</span>
+  }
+}</code></pre>
+<h3 id="getting-locals">Getting Locals</h3>
+<p>Getting the localized data from API call, add <code>Accept-Language</code> header and set its value to your desired language. If there isn't any data in that language or your Spica instance doesn't support that language, Spica gets the default language.</p>
+<blockquote>
+<p>Note: On the index of the client, Spica automatically takes your browser's language configuration and gets the data accordingly.</p>
+</blockquote>
+<h1 id="bucket-entries">Bucket Entries</h1>
+<h2 id="list-1">List</h2>
+<h3 id="with-client-3">With Client</h3>
+<p>You can find your Buckets on the side menu under <code>Content</code> section. Clicking any of Buckets under that section, takes you to the Bucket Data List page. Or alternatively, you can go to <code>/bucket/{Bucket _id}</code> URL.</p>
+<p>On top bar of the List Page, you'll see the Title and the Description of the Bucket.</p>
+<blockquote>
+<p>Tips: <code>info</code> icon next to the title, helps you to copy <code>_id</code> of the Bucket.</p>
+</blockquote>
+<p>Left side of the top bar contains some buttons to change listing. From left to right;</p>
+<p><code>Display</code>: Clicking it opens a checkbox menu. Each property can be hidden or shown via those checkboxes.</p>
+<p><code>Filter</code>: To filter list result, select a Bucket Property, enter a value and click <code>Apply</code> button. You can remove the filter anytime by clicking the <code>Clear</code> button.</p>
+<blockquote>
+<p>Remember: Only primitive type properties can be filtered. You can't search in <code>Array</code>, <code>Object</code>, <code>Storage</code> or <code>Relation</code> type properties.</p>
+</blockquote>
+<p><code>Refresh</code>: Refreshes the list.</p>
+<p><code>Add</code>: Opens Bucket Data Create page.</p>
+<h3 id="with-api-3">With API</h3>
+<p>URL of request:</p>
+<blockquote>
+<p>GET "{baseUrl}/bucket/:bucketId/data?{params}"</p>
+</blockquote>
+<p>Returns paginated <code>Bucket</code> array.</p>
+<p>Params:<br>
+All the params below are optional.</p>
+<p><code>"limit"</code>: Accepts number value. Limits the data count on listing array.</p>
+<p>"{baseUrl}/bucket/{bucket _id}?limit={number}"</p>
+<p><code>"skip"</code>: Skips number of entries before listing.</p>
+<p>"{baseUrl}/bucket/{bucket _id}?skip={number}"</p>
+<p><code>"sort"</code>: Accepts mongoDb \$sort aggregation. </p>
+<p>{sort order} can have one of the following values:
+<em>1 to specify ascending order.
+</em>-1 to specify descending order.</p>
+<p>"{baseUrl}/bucket/{bucket _id}?sort={ {fieldname}: {sort order} }"</p>
+<p><code>"prune"</code>: Accepts boolean. Ignores additional mappings on listing such as getting related Data etc. Returns the data as it is.</p>
+<p><code>"filter"</code>: Accepts any mongoDb aggregation stages [^<a href="https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/" target="_blank" class="external-link">MongoDB Aggregation Pipeline Stages</a>] excepts \$lookup.</p>
+<p>Example response:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"meta"</span>: {<span class="hljs-attr">"total"</span>: <span class="hljs-number">2</span>},
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d1c9305c0258a312d83e19c"</span>,
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"titvle1"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"description1"</span>
+    },
+    {
+      <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d1cabe049afec362c334c7e"</span>,
+      <span class="hljs-attr">"title"</span>: <span class="hljs-string">"title2"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"description2"</span>
+    }
+  ]
+}</code></pre>
+<h2 id="create-and-edit-1">Create and Edit</h2>
+<blockquote>
+<p>Remember: Spica analyzes the new data and validates it with main Bucket Properties. If the new data doesn't match with the schema, Spica won't save and returns validation error.</p>
+</blockquote>
+<h3 id="with-client-4">With Client</h3>
+<p>To edit an existing data, go to the Bucket Data Listing page and click the <code>edit</code> button of the data you would like to edit. To create new, click on the <code>plus</code> icon on top of the listing page.</p>
+<p>Spica Client will generate the needed form for you. Fill the form and click on <code>Save</code> button.</p>
+<h3 id="with-api-4">With API</h3>
+<p>Request URL:</p>
+<blockquote>
+<p>POST "{baseUrl}/bucket/{bucket _id}/data"</p>
+</blockquote>
+<p>Example request body:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d16195a818b3b3f2d21c019"</span>,
+  <span class="hljs-attr">"bucketPropertyKey"</span>: <span class="hljs-string">"new property value"</span>
+}</code></pre>
+<p>To edit an existing data, put <code>_id</code> of the data you would like to edit. To create, don't send <code>_id</code> in your request.</p>
+<h2 id="history">History</h2>
+<p>If you have followed the Installation guide and set your MongoDB replica sets correctly, your Spica instance keeps bucket data changes. It doesn't matter if you changed the data from the client, API calls or directly from the database as Spica listens to your database changes.</p>
+<h3 id="with-client-5">With Client</h3>
+<p>To access your history, go to bucket data edit page and you'll see a <code>clock</code> icon on the top left of the screen. Click that icon to open the list of history. Numbers represent the change order. If you hover your mouse to any of the numbers on the list, you can see when the changes occur.</p>
+<p>Clicking to any of the numbers will revert your data to that date. You can save it if you want, or click the <code>N</code> icon at top of the history list to get the latest.</p>
+<blockquote>
+<p>Note: Spica keeps ten latest history data. If you change the data more than that, oldest history data will be deleted.</p>
+</blockquote>
+<h4 id="with-api-5">With API</h4>
+<p>Listing Histories:</p>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/bucket/{bucket _id}/history/{bucket data _id}"</p>
+</blockquote>
+<p>Getting single history:</p>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/bucket/{bucket _id}/history/{bucket data _id}/{history _id}"</p>
+</blockquote>
+<h2 id="import--export">Import &#x26; Export</h2>

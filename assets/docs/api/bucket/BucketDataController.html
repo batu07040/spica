@@ -1,0 +1,362 @@
+<article class="api-doc">
+  
+  <header class="header">
+    <h1 class="title">BucketDataController</h1>
+    <label class="type controller">controller</label>
+  </header>
+  <section class="description"></section>
+  
+  <div class="body">
+    
+<h2>Resources</h2>
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:bucketId</span>
+   
+  <span class="separator">/</span>
+    
+  <span>data</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Not Required</b>
+  </p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bucketId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+  <h4>Query Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>relation</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>paginate</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>schedule</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>localize</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>filter</td>
+        <td><code>FilterQuery<BucketDocument></code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>limit</td>
+        <td><code>number</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>skip</td>
+        <td><code>number</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>sort</td>
+        <td><code>object</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:bucketId</span>
+   
+  <span class="separator">/</span>
+    
+  <span>data</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:documentId</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Not Required</b>
+  </p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bucketId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>documentId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+  <h4>Query Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>localize</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>relation</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:bucketId</span>
+   
+  <span class="separator">/</span>
+    
+  <span>data</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:data:add</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bucketId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method delete">DELETE</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:bucketId</span>
+   
+  <span class="separator">/</span>
+    
+  <span>data</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:documentId</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:data:delete</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bucketId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>documentId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method delete">DELETE</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:bucketId</span>
+   
+  <span class="separator">/</span>
+    
+  <span>data</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:data:delete</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bucketId</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+  </div>
+</article>

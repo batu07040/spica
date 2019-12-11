@@ -1,0 +1,7 @@
+content
+bazel-out/k8-fastbuild/bin/docs/content/content
+
+
+{}
+bazel-out/k8-fastbuild/bin
+{"data":[{"docs":["docs/content/concept/concept/doc-list.json","docs/content/concept/concept/bucket.html","docs/content/concept/concept/composer.html","docs/content/concept/concept/function.html","docs/content/concept/concept/index.html","docs/content/concept/concept/l10n.html","docs/content/concept/concept/passport.html","docs/content/concept/concept/storage.html","docs/content/concept/concept/subscription.html"],"list":"docs/content/concept/concept/doc-list.json","name":"concept","path":"docs/content/concept/concept"},{"docs":["docs/content/guide/guide/doc-list.json","docs/content/guide/guide/bucket.html","docs/content/guide/guide/function.html","docs/content/guide/guide/getting-started.html","docs/content/guide/guide/introduction.html","docs/content/guide/guide/passport.html","docs/content/guide/guide/storage.html","docs/content/guide/guide/subscription.html"],"list":"docs/content/guide/guide/doc-list.json","name":"guide","path":"docs/content/guide/guide"}]}

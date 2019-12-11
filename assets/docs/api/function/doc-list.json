@@ -1,0 +1,16 @@
+{
+  "name": "function",
+  "docs": [
+    {
+      "name": "FunctionController",
+      "path": "FunctionController",
+      "docType": "controller"
+    },
+    {
+      "name": "SubscriptionController",
+      "path": "SubscriptionController",
+      "docType": "controller"
+    }
+  ],
+  "children": []
+}

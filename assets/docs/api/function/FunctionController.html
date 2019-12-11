@@ -1,0 +1,596 @@
+<article class="api-doc">
+  
+  <header class="header">
+    <h1 class="title">FunctionController</h1>
+    <label class="type controller">controller</label>
+  </header>
+  <section class="description"></section>
+  
+  <div class="body">
+    
+<h2>Resources</h2>
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:index</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span>add</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:update</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span>trigger</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+    
+  <h4>Query Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>scope</td>
+        <td><code>string</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:show</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method delete">DELETE</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:delete</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>run</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:target</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:run</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>target</td>
+        <td><code>string</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>logs</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:show</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+  <h4>Query Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>begin</td>
+        <td><code>Date</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      
+      <tr>
+        <td>end</td>
+        <td><code>Date</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+   
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method delete">DELETE</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>logs</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:update</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>index</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:update</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>index</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:show</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>dependencies</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:update</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>delete-dependency</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:update</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>function</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+   
+  <span class="separator">/</span>
+    
+  <span>dependencies</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: function:show</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+  </div>
+</article>

@@ -1,0 +1,41 @@
+{
+  "name": "concept",
+  "docs": [
+    {
+      "name": "Bucket",
+      "path": "bucket",
+      "docType": "markdown"
+    },
+    {
+      "name": "Composer",
+      "path": "composer",
+      "docType": "markdown"
+    },
+    {
+      "name": "Function",
+      "path": "function",
+      "docType": "markdown"
+    },
+    {
+      "name": "Localization",
+      "path": "l10n",
+      "docType": "markdown"
+    },
+    {
+      "name": "Passport",
+      "path": "passport",
+      "docType": "markdown"
+    },
+    {
+      "name": "Storage",
+      "path": "storage",
+      "docType": "markdown"
+    },
+    {
+      "name": "Subscription (Webhooks)",
+      "path": "subscription",
+      "docType": "markdown"
+    }
+  ],
+  "children": []
+}

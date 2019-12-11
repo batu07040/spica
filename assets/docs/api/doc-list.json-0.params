@@ -1,0 +1,7 @@
+api
+bazel-out/k8-fastbuild/bin/docs/content/api/api
+docs/content/api/index.md
+index
+{}
+bazel-out/k8-fastbuild/bin
+{"data":[{"docs":["stacks/api/bucket/docs/doc-list.json","stacks/api/bucket/docs/BucketController.html","stacks/api/bucket/docs/BucketDataController.html"],"list":"stacks/api/bucket/docs/doc-list.json","name":"bucket","path":"stacks/api/bucket/docs"},{"docs":["stacks/api/function/docs/doc-list.json","stacks/api/function/docs/FunctionController.html","stacks/api/function/docs/SubscriptionController.html"],"list":"stacks/api/function/docs/doc-list.json","name":"function","path":"stacks/api/function/docs"},{"docs":["stacks/api/passport/docs/doc-list.json","stacks/api/passport/docs/IdentityController.html","stacks/api/passport/docs/PassportController.html","stacks/api/passport/docs/PolicyController.html"],"list":"stacks/api/passport/docs/doc-list.json","name":"passport","path":"stacks/api/passport/docs"},{"docs":["stacks/api/storage/docs/doc-list.json","stacks/api/storage/docs/StorageController.html"],"list":"stacks/api/storage/docs/doc-list.json","name":"storage","path":"stacks/api/storage/docs"}]}

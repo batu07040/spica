@@ -1,0 +1,41 @@
+{
+  "name": "guide",
+  "docs": [
+    {
+      "name": "Bucket",
+      "path": "bucket",
+      "docType": "markdown"
+    },
+    {
+      "name": "Function",
+      "path": "function",
+      "docType": "markdown"
+    },
+    {
+      "name": "Getting Started",
+      "path": "getting-started",
+      "docType": "markdown"
+    },
+    {
+      "name": "Introduction",
+      "path": "introduction",
+      "docType": "markdown"
+    },
+    {
+      "name": "Passport",
+      "path": "passport",
+      "docType": "markdown"
+    },
+    {
+      "name": "Storage",
+      "path": "storage",
+      "docType": "markdown"
+    },
+    {
+      "name": "Subscription",
+      "path": "subscription",
+      "docType": "markdown"
+    }
+  ],
+  "children": []
+}

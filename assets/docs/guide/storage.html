@@ -1,0 +1,45 @@
+<h1 id="storage">Storage</h1>
+<p>This module is essentially a file manager on your Spica instance. You can store, list and delete your files via this module.</p>
+<h2 id="listing-storages">Listing Storages</h2>
+<h4 id="with-client">With Client</h4>
+<p>You can find the list of your Storage by clicking on the <strong>Storage</strong> from the side menu or by going to the <code>/storage</code> URL. If you've just initialized the Spica, the list would be empty.</p>
+<h4 id="with-api">With API</h4>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/storage/{params}"</p>
+</blockquote>
+<p>Params:<br>
+All the params below are optional.</p>
+<p><code>"limit"</code>: Accepts number value. Limits the data count on listing array.</p>
+<p><code>"skip"</code>: Skips number of entries before listing.</p>
+<p><code>"sort"</code>: Accepts mongoDb \$sort aggregation.</p>
+<p>Example response:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"meta"</span>: {<span class="hljs-attr">"total"</span>: <span class="hljs-number">1</span>},
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d23021d9cab7f1be35b716f"</span>,
+      <span class="hljs-attr">"content"</span>: {<span class="hljs-attr">"type"</span>: <span class="hljs-string">"image/png"</span>, <span class="hljs-attr">"size"</span>: <span class="hljs-number">52450</span>},
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"logo.png"</span>,
+      <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://example.com/storage/5d23021d9cab7f1be35b716f"</span>
+    }
+  ]
+}</code></pre>
+<h2 id="getting-single-storage-item">Getting Single Storage Item</h2>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/storage/{storage _id}"</p>
+</blockquote>
+<p>Above url will return the storage item itself. For example; if the item is an image, url shows image itself. </p>
+<p>To get the json data of a storage item, add <code>withMeta=true</code> query parameter to your request.</p>
+<h2 id="deleting-storage-item">Deleting Storage Item</h2>
+<h4 id="with-client-1">With Client</h4>
+<p>Go to Storage Listing page and click on the <code>three dots</code> next to the item. Click <code>delete</code> button to delete the item.</p>
+<h4 id="with-api-call">With API Call</h4>
+<p>Request URL:</p>
+<blockquote>
+<p>DELETE "{baseUrl}/storage/{storage _id}"</p>
+</blockquote>
+<h2 id="online-image-editor">Online Image Editor</h2>
+<p>To edit image typed storage item, click the <code>three dots</code> next to the item to open the context menu. Clicking the <code>edit</code> button will takes you to the Image Editing page. </p>
+<p>On that page you crop the image, scale by percentage and rotate the image as you wish. Click on the <code>tick</code> icon to save the image after editing. </p>

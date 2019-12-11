@@ -1,0 +1,140 @@
+<mat-toolbar color="primary">
+  <span *ngIf="bucket$ | async; let bucket" @smooth>
+    <h4>
+      <mat-icon>{{ bucket.icon }}</mat-icon>
+      <span>{{ bucket.title }}</span>
+
+      <mat-chip-list *ngIf="bucket.readOnly">
+        <mat-chip disableRipple>Read Only</mat-chip>
+      </mat-chip-list>
+    </h4>
+    <h6>{{ bucket.description }}</h6>
+  </span>
+
+  <span class="space-between"></span>
+  <button
+    *ngIf="histories$ | async; let histories"
+    mat-icon-button
+    [matBadge]="histories.length"
+    matBadgeColor="warn"
+    matBadgeSize="small"
+    [matMenuTriggerFor]="historyMenu"
+    @smooth
+  >
+    <mat-icon>restore</mat-icon>
+    <mat-menu #historyMenu="matMenu" class="history-tree mat-elevation-z25" xPosition="before">
+      <ng-template matMenuContent>
+        <button
+          mat-icon-button
+          mat-raised-button
+          [disabled]="!now"
+          color="primary"
+          class="mat-elevation-z0"
+          (click)="data = now; $event.stopPropagation()"
+          matTooltip="Now"
+          matTooltipPosition="before"
+        >
+          N
+        </button>
+        <button
+          *ngFor="let history of histories; let index = index"
+          mat-icon-button
+          mat-raised-button
+          color="accent"
+          class="mat-elevation-z0"
+          (click)="revert(history._id); $event.stopPropagation()"
+          [matTooltip]="history.date | date: 'MMM d y, h:mm:ss a'"
+          matTooltipPosition="before"
+          [matBadge]="history.changes"
+          matBadgeColor="warn"
+          matBadgeSize="small"
+        >
+          {{ index + 1 }}
+        </button>
+      </ng-template>
+    </mat-menu>
+  </button>
+</mat-toolbar>
+
+<mat-card *ngIf="bucket$ | async; let bucket" class="mat-elevation-z25" @smooth>
+  <mat-card-content [class.handset]="isHandset$ | async">
+    <form #form="ngForm">
+      <div *ngFor="let layout of layouts" [class]="layout">
+        <ng-container *ngFor="let propertyKv of bucket['positioned'][layout]">
+          <div
+            *ngIf="propertyKv.value.options?.translate && data[propertyKv.key]"
+            [inputPlacer]="propertyKv.value"
+            [disabled]="propertyKv.value.readOnly || !language.selected || bucket.readOnly"
+            [required]="bucket.required && bucket.required.indexOf(propertyKv.key) > -1"
+            [name]="propertyKv.key"
+            #translateModel="ngModel"
+            [(ngModel)]="data[propertyKv.key][language.selected]"
+            [requiredTranslate]="data[propertyKv.key]"
+            [currentLanguage]="language.selected"
+            [defaultLanguage]="language.default"
+          >
+            <property-language
+              #language
+              matSuffix
+              (click)="$event.stopPropagation()"
+            ></property-language>
+            <mat-error *ngIf="translateModel?.errors?.requiredTranslate && translateModel.touched">
+              {{ language.default }} value is required as it is the default language.
+            </mat-error>
+          </div>
+          <div
+            *ngIf="!propertyKv.value.options.translate"
+            [inputPlacer]="propertyKv.value"
+            [disabled]="propertyKv.value.readOnly || bucket.readOnly"
+            [required]="bucket.required && bucket.required.indexOf(propertyKv.key) > -1"
+            [name]="propertyKv.key"
+            [(ngModel)]="data[propertyKv.key]"
+          ></div>
+        </ng-container>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <form #scheduleForm="ngForm" *ngIf="data?._schedule">
+      <button [disabled]="bucket.readOnly" mat-button color="warn" (click)="cancelSchedule()">
+        <mat-icon>cancel</mat-icon> Cancel Schedule
+      </button>
+      <mat-form-field>
+        <input
+          matInput
+          readonly
+          required
+          name="schedule_date"
+          [(ngModel)]="data._schedule"
+          [disabled]="bucket.readOnly"
+          [owlDateTime]="dt1"
+          [owlDateTimeTrigger]="dt1"
+          [min]="minScheduleDate"
+        />
+        <owl-date-time #dt1></owl-date-time>
+      </mat-form-field>
+    </form>
+
+    <button
+      *ngIf="!data._schedule"
+      mat-icon-button
+      matTooltip="Set publish date"
+      [disabled]="bucket.readOnly"
+      (click)="schedule()"
+    >
+      <mat-icon>schedule</mat-icon>
+    </button>
+    <button
+      canInteract="bucket:data:update"
+      [disabled]="form.invalid || scheduleForm?.invalid || bucket.readOnly"
+      mat-button
+      (click)="saveBucketRow()"
+    >
+      <mat-progress-spinner *ngIf="savingBucketState" diameter="20" mode="indeterminate">
+      </mat-progress-spinner>
+      <mat-icon *ngIf="!savingBucketState">{{ data?._id ? "double_arrow" : "add" }}</mat-icon>
+      <span>{{ data?._id ? "Update" : "Add" }}</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

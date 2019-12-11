@@ -1,0 +1,41 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
+load("@npm_bazel_typescript//:defs.bzl", "ts_library")
+load(":defs.bzl", "ts_library_d")
+
+ts_library(
+    name = "init_sources",
+    srcs = ["init.ts"],
+    deps = [
+        "@npm//@types/node",
+        # Do not add anything
+    ],
+)
+
+ts_library_d(
+    name = "init_sources_d",
+    libraries = [
+        ":init_sources",
+    ],
+)
+
+container_image(
+    name = "initcontainer",
+    base = "@initcontainer_base//image:dockerfile_image.tar",
+    cmd = ["init.js"],
+    files = [":init_sources_d"],
+    labels = {
+        "maintainer": "Spica maintainers <dev@spicanengine.com>",
+    },
+)
+
+container_push(
+    name = "initcontainer_push",
+    format = "Docker",
+    image = ":initcontainer",
+    registry = "index.docker.io",
+    repository = "spicaengine/initcontainer",
+    tag = "{BUILD_SCM_VERSION}",
+    tags = ["release-with-spica"],
+)

@@ -1,0 +1,107 @@
+<ng-template #toolbar>
+  <mat-toolbar-row>
+    <h4>
+      <mat-icon>account_circle</mat-icon>
+      <span>Identity</span>
+    </h4>
+  </mat-toolbar-row>
+</ng-template>
+<mat-card class="mat-elevation-z25">
+  <mat-card-content>
+    <form #identityForm="ngForm">
+      <mat-form-field>
+        <input
+          matInput
+          name="identifier"
+          placeholder="Identifier"
+          [(ngModel)]="identity.identifier"
+          #identifierModel="ngModel"
+          required
+        />
+        <mat-error *ngIf="identifierModel?.errors?.required">This field is required.</mat-error>
+      </mat-form-field>
+      <button
+        mat-button
+        *ngIf="identity._id && !changePasswordState"
+        (click)="changePasswordState = !changePasswordState"
+      >
+        Change Password
+      </button>
+      <mat-form-field *ngIf="!identity._id || changePasswordState">
+        <input
+          matInput
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="identity.password"
+          #passwordModel="ngModel"
+          required
+        />
+        <mat-error *ngIf="passwordModel?.errors?.required">This field is required.</mat-error>
+      </mat-form-field>
+
+      <div
+        *ngFor="let propertyKv of preferences?.attributes?.properties | keyvalue"
+        [name]="propertyKv.key"
+        [inputPlacer]="propertyKv.value"
+        [disabled]="propertyKv.value.readOnly"
+        [required]="
+          preferences.attributes.required &&
+          preferences.attributes.required.indexOf(propertyKv.key) > -1
+        "
+        [ngModel]="identity.attributes && identity.attributes[propertyKv.key]"
+        (ngModelChange)="
+          identity.attributes = identity.attributes || {};
+          identity.attributes[propertyKv.key] = $event
+        "
+      ></div>
+
+      <div class="policies" *ngIf="identity._id">
+        <mat-list>
+          <h3 mat-subheader>Owned Policies</h3>
+          <mat-list-item *ngFor="let policy of ownedPolicies">
+            <mat-icon mat-list-icon>layers</mat-icon>
+            <label mat-line [matTooltip]="policy.description">{{ policy.name }}</label>
+            <button
+              mat-icon-button
+              canInteract="passport:identity:policy"
+              matTooltip="Detach this policy"
+              (click)="detachPolicy(policy._id)"
+              color="warn"
+            >
+              <mat-icon>link_off</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+
+        <mat-list>
+          <h3 mat-subheader>Ownable Policies</h3>
+          <ng-container *ngFor="let policy of policies">
+            <mat-list-item *ngIf="identity?.policies?.indexOf(policy._id) == -1">
+              <mat-icon mat-list-icon>layers</mat-icon>
+              <label mat-line [matTooltip]="policy.description">{{ policy.name }}</label>
+              <button
+                mat-icon-button
+                canInteract="passport:identity:policy"
+                matTooltip="Attach this policy"
+                (click)="attachPolicy(policy._id)"
+              >
+                <mat-icon>link</mat-icon>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </div>
+      <mat-error *ngIf="error">{{ error }}</mat-error>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      canInteract="passport:identity:update"
+      [disabled]="identityForm.invalid"
+      mat-button
+      (click)="upsertIdentity()"
+    >
+      <mat-icon>save</mat-icon> Save
+    </button>
+  </mat-card-actions>
+</mat-card>

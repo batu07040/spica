@@ -1,0 +1,118 @@
+:host ::ng-deep {
+  .mat-subheader {
+    padding: 0;
+  }
+  mat-divider {
+    width: 100% !important;
+    margin: 15px 0 15px 0;
+    position: relative !important;
+  }
+
+  .toolbar {
+    min-height: 250px;
+    padding: 0 30px;
+    align-items: flex-start;
+    .space-between {
+      flex: 1 1 auto;
+    }
+    h4 {
+      mat-icon,
+      span {
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  mat-card {
+    margin: 5%;
+    &.toolbar-card {
+      margin: 30px;
+      margin-top: -110px;
+      // For proper border radius
+      overflow: hidden;
+    }
+    mat-card-header {
+      mat-card-title > * {
+        vertical-align: middle;
+      }
+    }
+
+    mat-card-content {
+      mat-form-field[description],
+      mat-form-field[name] {
+        margin: 10px 0 10px 0;
+        width: 100%;
+      }
+
+      mat-list {
+        .mat-list-item {
+          height: auto;
+          .mat-list-item-content {
+            display: contents;
+          }
+          mat-form-field.trigger,
+          span.margin {
+            margin: 10px 10px 0 0;
+          }
+        }
+        .editor {
+          .decorationsOverviewRuler {
+            display: none;
+          }
+          .overflow-guard {
+            border: 2px solid #0000000f;
+          }
+          .last-saved {
+            display: block;
+            text-align: right;
+            mat-hint {
+              height: 20px;
+              font-size: 12px;
+              text-align: right;
+              display: inline-block;
+            }
+            mat-progress-spinner {
+              display: inline-block;
+              vertical-align: middle;
+              margin-left: 5px;
+              transition: opacity 0.5s ease-in-out;
+            }
+          }
+        }
+        .run {
+          mat-expansion-panel {
+            mat-expansion-panel-header {
+              &[state="failed"] {
+                color: red;
+              }
+              &[state="succeeded"] {
+                color: green;
+              }
+              span {
+                margin-top: 3px;
+                padding-left: 3px;
+              }
+            }
+          }
+          .output {
+            mat-icon,
+            pre {
+              display: inline-block;
+              vertical-align: middle;
+            }
+          }
+        }
+
+        .triggers {
+          display: inline-table;
+          padding-bottom: 20px;
+          height: 80px;
+          mat-form-field {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+}

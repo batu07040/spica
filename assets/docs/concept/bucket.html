@@ -1,0 +1,30 @@
+<h1 id="bucket">Bucket</h1>
+<doc-toc><ul>
+<li><fragment-link url="#bucket-creation-steps">Bucket Creation Steps</fragment-link></li>
+<li><fragment-link url="#auto-publish">Auto-Publish</fragment-link></li>
+<li><fragment-link url="#history--revisions">History / Revisions</fragment-link></li>
+<li><fragment-link url="#real-time">Real-time</fragment-link></li>
+</ul></doc-toc>
+<h2 id="bucket-creation-steps">Bucket Creation Steps</h2>
+<p>To create a bucket you need to define bucket name, description, fields and make some customization. Once you finish creating a new bucket, you will see it on navigator. Bucket ID will be assigned automatically so you can access your data via API. For more details visit API Reference.</p>
+<blockquote>
+<p>NOTE: Until you finalize bucket creation steps, everything will be in memory. So if you change page, your settings will be lost.</p>
+</blockquote>
+<p>Properties</p>
+<p>All properties you can use in bucket module have been listed below. For more details please visit API reference.</p>
+<h3 id="some-examples">Some Examples</h3>
+<p>Agency name: <code>string</code></p>
+<p>Age: <code>number</code></p>
+<p>Project release date: <code>date</code> with predefined values.</p>
+<p>Company address: <code>richtext</code> (if you want to enable HTML codes) or <code>textarea</code>.</p>
+<p>Thumbnail image: <code>storage</code></p>
+<p>Phone: <code>string</code></p>
+<p>Product name: <code>string</code></p>
+<h2 id="auto-publish">Auto-Publish</h2>
+<p>For scheduled publish, there is an auto-publish feature in the bucket module. So you can set a date for a specific entry and the system will make that particular entry available in that time. You can see all scheduled entries and published entries in different tabs. To get more details about accessing to scheduled entry, please see API reference.</p>
+<h2 id="history--revisions">History / Revisions</h2>
+<p>To have a full control in your database, we integrated history system in bucket module. Last x amount of revisions will be stored in database.</p>
+<p>NOTE: To make history feature works, you need to have a MongoDB with 3 replica sets.
+You can see each revisions by clicking history on right side of screen.</p>
+<h2 id="real-time">Real-time</h2>
+<p>This feature helps you to connect bucket collections and listen to the bucket data and their changes in real-time to handle constantly changing workloads. Unlike API calls, retrieved data will always be actual. You can skip some data row or limit the amount of data you'll get. Sorting and filtering are also supported. Real-time bucket system is mostly useful for chat applications, reservation systems and accounting.</p>

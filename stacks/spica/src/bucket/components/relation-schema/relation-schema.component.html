@@ -1,0 +1,9 @@
+<mat-form-field>
+  <mat-select placeholder="Bucket" #model="ngModel" [(ngModel)]="schema.bucketId" required>
+    <mat-option *ngFor="let bucket of buckets | async" [value]="bucket._id">
+      {{ bucket.title }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="model?.errors?.required">You must select a bucket</mat-error>
+</mat-form-field>
+{{ schema.bucketId }}

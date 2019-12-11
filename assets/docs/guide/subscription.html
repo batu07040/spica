@@ -1,0 +1,58 @@
+<h1 id="subscription">Subscription</h1>
+<h2 id="listing-subscriptions">Listing Subscriptions</h2>
+<h3 id="with-client">With Client</h3>
+<p>You can find the list of your Subscriptions by clicking on the <strong>Subscription</strong> from the side menu under the Developer section. If you've just initialized the Spica, the list would be empty.</p>
+<h3 id="with-api-call">With API Call</h3>
+<p>Request URL:</p>
+<blockquote>
+<p>GET "{baseUrl}/subscriptions?{params}"</p>
+</blockquote>
+<p>Params:<br>
+All the params below are optional.</p>
+<p><code>"limit"</code>: Accepts number value. Limits the data count on listing array.</p>
+<p><code>"skip"</code>: Skips number of entries before listing.</p>
+<p>Example request body:</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d28479731c9df40396bc240"</span>,
+  <span class="hljs-attr">"trigger"</span>: {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"database"</span>,
+    <span class="hljs-attr">"options"</span>: {
+      <span class="hljs-attr">"fullDocument"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"collection"</span>: <span class="hljs-string">"bucket_5cd185bdb6103e96f0dc9f0c"</span>,
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"UPDATE"</span>
+    }
+  },
+  <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://tburleson-layouts-demos.firebaseapp.com/#/grid"</span>
+}</code></pre>
+<h2 id="create-and-edit-subscription">Create and Edit Subscription</h2>
+<h3 id="with-client-1">With Client</h3>
+<h3 id="with-api-call-1">With API Call</h3>
+<p>Request URL:</p>
+<blockquote>
+<p>POST "{baseUrl}/subscriptions/add"</p>
+</blockquote>
+<p>Example :</p>
+<pre><code class="hljs language-json">{
+  <span class="hljs-attr">"meta"</span>: {<span class="hljs-attr">"total"</span>: <span class="hljs-number">1</span>},
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5d28479731c9df40396bc240"</span>,
+      <span class="hljs-attr">"trigger"</span>: {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"database"</span>,
+        <span class="hljs-attr">"options"</span>: {
+          <span class="hljs-attr">"fullDocument"</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-attr">"collection"</span>: <span class="hljs-string">"bucket_5cd185bdb6103e96f0dc9f0c"</span>,
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"UPDATE"</span>
+        }
+      },
+      <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://tburleson-layouts-demos.firebaseapp.com/#/grid"</span>
+    }
+  ]
+}</code></pre>
+<h2 id="delete-subscription">Delete Subscription</h2>
+<h3 id="with-client-2">With Client</h3>
+<h3 id="with-api-call-2">With API Call</h3>
+<p>Request URL:</p>
+<blockquote>
+<p>DELETE "{baseUrl}/subscriptions/{subscription _id}"</p>
+</blockquote>

@@ -1,0 +1,70 @@
+{
+  "name": "api",
+  "docs": [],
+  "children": [
+    {
+      "name": "bucket",
+      "docs": [
+        {
+          "name": "BucketDataController",
+          "path": "BucketDataController",
+          "docType": "controller"
+        },
+        {
+          "name": "BucketController",
+          "path": "BucketController",
+          "docType": "controller"
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "function",
+      "docs": [
+        {
+          "name": "FunctionController",
+          "path": "FunctionController",
+          "docType": "controller"
+        },
+        {
+          "name": "SubscriptionController",
+          "path": "SubscriptionController",
+          "docType": "controller"
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "passport",
+      "docs": [
+        {
+          "name": "IdentityController",
+          "path": "IdentityController",
+          "docType": "controller"
+        },
+        {
+          "name": "PassportController",
+          "path": "PassportController",
+          "docType": "controller"
+        },
+        {
+          "name": "PolicyController",
+          "path": "PolicyController",
+          "docType": "controller"
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "storage",
+      "docs": [
+        {
+          "name": "StorageController",
+          "path": "StorageController",
+          "docType": "controller"
+        }
+      ],
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+::ng-deep .filter-menu {
+  .mat-menu-content {
+    width: 100%;
+    padding: 30px 0 20px !important;
+    mat-form-field {
+      width: 80%;
+      margin: 0 10%;
+
+      .mat-form-field-infix {
+        width: 300px;
+      }
+    }
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+:host {
+  mat-toolbar {
+    min-height: 250px;
+    padding: 0 30px;
+    align-items: flex-start;
+
+    span:first-of-type {
+      h4 {
+        & > * {
+          vertical-align: middle;
+          display: inline-block;
+        }
+        mat-icon {
+          margin-left: -3px;
+        }
+        span {
+          margin-left: 5px;
+        }
+        mat-chip-list {
+          margin-left: 10px;
+          mat-chip {
+            font-size: 11px;
+            padding: 7px 10px;
+            min-height: 20px;
+            height: 22px;
+            line-height: normal;
+          }
+        }
+      }
+
+      h6 {
+        font-size: 14px;
+      }
+    }
+
+    .space-between {
+      flex: 1 1 auto;
+    }
+
+    button.delete {
+      margin-right: 20px;
+    }
+  }
+
+  mat-card {
+    margin: 30px;
+    margin-top: -110px;
+    // For proper border radius
+    overflow: hidden;
+
+    mat-table {
+      width: 100%;
+
+      mat-header-cell.action,
+      mat-cell.action {
+        max-width: 150px;
+      }
+      mat-header-cell.select,
+      mat-cell.select {
+        max-width: 60px;
+      }
+      mat-header-cell.scheduled,
+      mat-cell.scheduled {
+        max-width: 200px;
+      }
+      .mat-header-row {
+        mat-header-cell {
+          mat-checkbox {
+            height: 0px;
+            margin-bottom: 15px;
+          }
+          &:first-of-type {
+            padding-left: 10px;
+          }
+          &:last-of-type {
+            justify-content: flex-end;
+          }
+        }
+      }
+      .mat-row {
+        mat-cell {
+          mat-checkbox {
+            height: 0px;
+            margin-bottom: 15px;
+          }
+          &:first-of-type {
+            padding-left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          &:last-of-type {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "bucket",
+  "docs": [
+    {
+      "name": "BucketDataController",
+      "path": "BucketDataController",
+      "docType": "controller"
+    },
+    {
+      "name": "BucketController",
+      "path": "BucketController",
+      "docType": "controller"
+    }
+  ],
+  "children": []
+}

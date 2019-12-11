@@ -1,0 +1,297 @@
+<article class="api-doc">
+  
+  <header class="header">
+    <h1 class="title">BucketController</h1>
+    <label class="type controller">controller</label>
+  </header>
+  <section class="description"></section>
+  
+  <div class="body">
+    
+<h2>Resources</h2>
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>templates</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Not Required</b>
+  </p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:index</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>predefs</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:index</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:update</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method get">GET</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:show</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method delete">DELETE</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:delete</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>ObjectId</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>import</span>
+   
+  <span class="separator">/</span>
+    
+  <span class="param">:id</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:add</p>
+   
+  <h4>Params</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Optional</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><code>string</code></td>
+        <td><code>false</code></td>
+        <td>No description</td>
+      </tr>
+      </tbody>
+  </table>
+    
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>import-schema</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:add</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>export</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:show</p>
+     
+</section>
+
+<section class="resource">
+  <h3>
+    <span class="method post">POST</span>
+    <span class="path">
+<span class="route-path">
+  <span class="separator">/</span> 
+  <span>bucket</span>
+   
+  <span class="separator">/</span>
+    
+  <span>export-schema</span>
+    </span>
+</span>
+  </h3>
+  
+  <p class="authorization">
+    Authorization: <b>Required</b>
+  </p>
+  
+  <p class="actions">Required actions: bucket:show</p>
+     
+</section>
+
+  </div>
+</article>

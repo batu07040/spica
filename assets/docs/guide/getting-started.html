@@ -1,0 +1,120 @@
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="installing-spica">Installing Spica</h2>
+<p>This tutorial helps you to install Spica to different environments. We provide a few ways to install, so you can choose which one of them suits you. </p>
+<h3 id="using-spica-cli">Using Spica Cli</h3>
+<blockquote>
+<p>Note: This feature is currently unavailable. Continue with other installation ways. </p>
+</blockquote>
+<p>Spica has a command-line interface for quick installation. To use it, you must have <a href="https://www.docker.com/" target="_blank" class="external-link">Docker</a> and <a href="https://nodejs.org" target="_blank" class="external-link">NodeJs</a> installed on your development environment.</p>
+<p>Install CLI using the <code>npm</code> package manager:</p>
+<pre><code class="hljs language-sh">$ npm install @spicaengine/cli -g</code></pre>
+<p>To create and serve a new Spica instance on your computer, simply run:</p>
+<pre><code class="hljs language-sh">$ spica run my-spica-instance </code></pre>
+<p>When everything completed, you will get an output similar to below:</p>
+<pre><code class="hljs language-console">✔ Pulling images (4/4)
+✔ Creating a network named test-network.
+✔ Creating database containers (3/3)
+✔ Initiating replication between database containers.
+✔ Waiting for the replica set to become ready.
+✔ Creating spica containers (2/2)
+✔ Creating an ingress to route traffic.
+Spica my-first-spica-instance is serving on http://localhost:4500
+Open your browser on http://localhost:4500/spica to login.</code></pre>
+<h3 id="using-kubernetes">Using Kubernetes</h3>
+<ul>
+<li>Install kubectl: <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" class="external-link">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a></li>
+<li>After you'll need a kubernetes environment it can be either a local or a cloud kubernetes environment.</li>
+<li>For local Kubernetes, you can use minikube: <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/" target="_blank" class="external-link">https://kubernetes.io/docs/tasks/tools/install-minikube/</a></li>
+<li>For AWS, you can create an EKS cluster: <a href="https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html" target="_blank" class="external-link">https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html</a></li>
+<li>For GCP, you can create a GKE cluster: <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster" target="_blank" class="external-link">https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster</a></li>
+<li>For Azure, you can create an AKS cluster: <a href="https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough" target="_blank" class="external-link">https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough</a></li>
+<li>Ensure kubectl connected to the kubernetes cluster by running <code>kubectl get nodes</code> command.</li>
+<li>The Cluster must have Nginx ingress controller enabled. You can follow <a href="https://kubernetes.github.io/ingress-nginx/deploy/" target="_blank" class="external-link">https://kubernetes.github.io/ingress-nginx/deploy/</a> to install Nginx ingress on the cluster.</li>
+<li>Just apply <code>kubectl apply -f https://raw.githubusercontent.com/spica-engine/spica/master/deployment.yaml</code></li>
+</ul>
+<h3 id="using-docker">Using Docker</h3>
+<ul>
+<li>Install docker on your environment and ensure that you have installed docker correctly by running "<code>docker ps</code>" command.</li>
+<li>For macOS: <a href="https://docs.docker.com/docker-for-mac/" target="_blank" class="external-link">https://docs.docker.com/docker-for-mac/</a></li>
+<li>For Windows: <a href="https://docs.docker.com/docker-for-windows/install/" target="_blank" class="external-link">https://docs.docker.com/docker-for-windows/install/</a></li>
+<li>For other platforms checkout docker webpage: <a href="https://docs.docker.com" target="_blank" class="external-link">https://docs.docker.com</a></li>
+<li>Create a docker network for communication between Spica services.</li>
+</ul>
+<pre><code class="hljs language-sh">docker network create spica</code></pre>
+<ul>
+<li>Setup <strong>Three Replica Set</strong> MongoDB</li>
+</ul>
+<pre><code class="hljs language-sh">docker run --name mongo-1 --network spica -d mongo:4.2 --replSet <span class="hljs-string">"rs0"</span> --bind_ip_all
+docker run --name mongo-2 --network spica -d mongo:4.2 --replSet <span class="hljs-string">"rs0"</span> --bind_ip_all
+docker run --name mongo-3 --network spica -d mongo:4.2 --replSet <span class="hljs-string">"rs0"</span> --bind_ip_all</code></pre>
+<ul>
+<li>Ensure that all three of replica set members are up and running.</li>
+</ul>
+<pre><code class="hljs language-sh"><span class="hljs-comment"># Run the command below</span>
+docker ps --filter=Name=mongo
+<span class="hljs-comment"># If you get an output that similar to this, that means you are good to go.</span>
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+1c903c67f70e        mongo:4.2           <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp           mongo-2
+0b51ab4e7909        mongo:4.2           <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp           mongo-1
+2f315729758c        mongo:4.2           <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp           mongo-3</code></pre>
+<ul>
+<li>Setup replication between members so they can elect a primary.</li>
+</ul>
+<pre><code class="hljs language-sh">docker <span class="hljs-built_in">exec</span> -it mongo-1 mongo admin --<span class="hljs-built_in">eval</span> <span class="hljs-string">'rs.initiate({
+ _id: "rs0",
+ members: [
+ { _id: 0, host : "mongo-1" },
+ { _id: 1, host : "mongo-2" },
+ { _id: 2, host : "mongo-3", priority : 0, slaveDelay: 5, tags: { slaveDelay: "true" } }
+ ]
+})'</span></code></pre>
+<ul>
+<li>Additionally, if you want to keep your files on every container update, you need to mount a docker volume to your <strong><code>api</code></strong> container and change <code>PERSISTENT_PATH</code> environment variable. For more info checkout: <a href="https://docs.docker.com/storage/volumes/" target="_blank" class="external-link">https://docs.docker.com/storage/volumes/</a></li>
+<li>Setup spica</li>
+</ul>
+<pre><code class="hljs language-sh"><span class="hljs-comment"># Start spica (API) on port 4400</span>
+docker run
+    --name api
+    --network spica
+    -p 4400:80
+    -e PORT=80
+    -e DATABASE_URI=<span class="hljs-string">"mongodb://mongo-1,mongo-2,mongo-3"</span>
+    -e REPLICA_SET=<span class="hljs-string">"rs0"</span>
+    -e DATABASE_NAME=spica
+    <span class="hljs-comment"># Password of the default spica user</span>
+    -e DEFAULT_PASSWORD=spica
+    <span class="hljs-comment"># API will use this secret to sign login tokens.</span>
+    -e SECRET=<span class="hljs-string">"<span class="hljs-variable">$2b</span><span class="hljs-variable">$10</span><span class="hljs-variable">$shOzfYpDCy</span>.RMgsVlwdQeONKGGzaBTfTQAjmXQNpMp4aKlLXrfZ/C"</span>
+    <span class="hljs-comment"># This secret is important to keep your Spica secure.</span>
+    <span class="hljs-comment"># Changing this secret to something different is strongly advised.</span>
+    -e PUBLIC_HOST=http://localhost:4400 <span class="hljs-comment"># Publicly accesible url of the API.</span>
+    -e PERSISTENT_PATH=/tmp <span class="hljs-comment"># The path that the storage files will be kept at.</span>
+    -d spicaengine/api
+
+<span class="hljs-comment"># Start spica (Client) on port 4500</span>
+docker run
+    --name spica
+    --network spica
+    -e BASE_URL=<span class="hljs-string">"/"</span>
+    -e API_URL=<span class="hljs-string">"http://localhost:4400"</span> <span class="hljs-comment"># Publicly accesible url of the API for connection. In this case it is http://localhost:4400</span>
+    -p 4500:80
+    -d spicaengine/spica</code></pre>
+<ul>
+<li>Ensure you have setup everything correctly</li>
+</ul>
+<pre><code class="hljs language-sh"><span class="hljs-comment"># Run</span>
+docker ps
+<span class="hljs-comment"># And you will see an output like this</span>
+CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS                    NAMES
+9c30befa326b        spicaengine/api             <span class="hljs-string">"/app/stacks/api_ima…"</span>   4 seconds ago       Up 4 seconds        0.0.0.0:4300->4300/tcp   api
+a973f9598ba2        spicaengine/spica           <span class="hljs-string">"nginx -g 'daemon of…"</span>   4 seconds ago       Up 4 seconds        0.0.0.0:4500->80/tcp     spica
+2f315729758c        mongo:4.2                   <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp                mongo-3
+1c903c67f70e        mongo:4.2                   <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp                mongo-2
+0b51ab4e7909        mongo:4.2                   <span class="hljs-string">"docker-entrypoint.s…"</span>   4 seconds ago       Up 4 seconds        27017/tcp                mongo-1
+<span class="hljs-comment"># the first container (api) is our api service, core of our spica instance.</span>
+<span class="hljs-comment"># the second container (spica) is our client which communicates with api container.</span>
+<span class="hljs-comment"># the other ones (mongo-1, mongo-2, mongo-3) is our three-member replica set mongodb containers.</span></code></pre>
+<ul>
+<li>Open your browser and navigate to <a href="http://localhost:4500" target="_blank" class="external-link">http://localhost:4500</a></li>
+<li>The default <code>identifier</code> is <code>spica</code> and the password is <code>spica</code>.</li>
+</ul>
