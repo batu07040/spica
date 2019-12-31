@@ -11,7 +11,13 @@ import {
   MatMenuModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatOptionModule,
+  MatExpansionPanel,
+  MatExpansionModule
 } from "@angular/material";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -56,7 +62,14 @@ import {IntersectDirective} from "./directives/intersect.directive";
     MatButtonModule,
     MatListModule,
     MatSidenavModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatExpansionModule
+    
+
   ],
   declarations: [
     AppComponent,

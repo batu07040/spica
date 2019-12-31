@@ -7,15 +7,15 @@
   deploy for every device. You can develop mobile application,
   website or PWA faster and secure."
 >
-  <img
-    intersect="flyOne"
-    wait="true"
-    ngClass.lt-md="mobile-img"
-    fxFlex.lt-md="30%"
-    fxFlex.gt-sm="35%"
-    src="assets/artboard/enterprise.svg"
-    alt="Enterprise"
-  />
+  <div fxFlex.lt-md="30%" fxFlex.gt-sm="35%">
+    <img
+      intersect="flyOne"
+      wait="true"
+      ngClass.lt-md="mobile-img"
+      src="assets/artboard/enterprise.svg"
+      alt="Enterprise"
+    />
+  </div>
   <ul fxFlex.lt-md="100%" fxFlex="60%" fxLayout="column" fxLayoutAlign="space-between">
     <li>
       <h3>Dedicated Solution Architects</h3>
@@ -44,5 +44,183 @@
     </li>
   </ul>
 </home-section>
+
+<section class="content-wrapper bg-gray">
+  <div class="container" fxFlex="100%" fxLayoutAlign="space-around">
+    <div fxFlex.lt-md="30%" fxFlex.gt-sm="35%">
+      <img
+        intersect="flyOne"
+        wait="true"
+        ngClass.lt-md="mobile-img"
+        src="assets/images/teknodev-logo4.png"
+        alt="Enterprise"
+      />
+    </div>
+
+    <div
+      fxFlex.lt-md="100%"
+      fxFlex="60%"
+      fxLayout.lt-md="row wrap"
+      fxLayoutGap="14px grid"
+      fxLayout="column"
+      fxLayoutAlign="space-between"
+    >
+      <h3 class="description-title">Teknodev</h3>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi suscipit voluptatibus quia
+        magni illo asperiores ipsa iure deleniti dicta debitis maxime, cupiditate culpa quis
+        repudiandae vel. Nulla placeat delectus repudiandae?
+      </p>
+
+      <div fxLayoutAlign="space-between" class="enterprise-button-wrapper">
+        <button
+          fxFlex="45%"
+          fxLayoutAlign="center"
+          fxLayout="column"
+          mat-flat-button
+          color="primary"
+        >
+          Register For Free
+        </button>
+        <button
+          fxFlex="45%"
+          fxLayoutAlign="center"
+          fxLayout="column"
+          mat-flat-button
+          color="primary"
+        >
+          Sign In
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-wrapper">
+  <div class="container" fxFlex="100%" fxLayoutAlign="space-around">
+    <div fxFlex="30" fxFlex.lt-md="100%" fxLayout="column" fxLayoutAlign="space-between">
+      <h3 class="description-title">Auto-Updates & Backups</h3>
+      <p>
+        We handle all updates so you can effortlessly take advantage of new features and fixes.
+        Database backups are generated nightly and kept off-site.
+      </p>
+    </div>
+
+    <div fxFlex="30" fxFlex.lt-md="100%" fxLayout="column" fxLayoutAlign="space-between">
+      <h3 class="description-title">Data Portability</h3>
+      <p>
+        You're never locked-in to our services. You can cancel your account at any time, and even
+        request full SQL database exports of your projects.
+      </p>
+    </div>
+
+    <div fxFlex="30" fxFlex.lt-md="100%" fxLayout="column" fxLayoutAlign="space-between">
+      <h3 class="description-title">Teams & Organizations</h3>
+      <p>
+        Manage multiple organizations from one account, collaborate with other members without
+        sharing credentials, and take advantage of unified billing.
+      </p>
+    </div>
+  </div>
+
+  <div class="flex-margin br-bottom"></div>
+
+  <div class="container" fxFlex="100%" fxLayoutAlign="space-around">
+    <div fxFlex="100%">
+      <ul fxLayout="row wrap">
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">update</mat-icon> <span>Auto-Updates</span>
+        </li>
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">supervised_user_circle</mat-icon>
+          <span>Unlimited Roles</span>
+        </li>
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">translate</mat-icon> <span>Unlimited Locales</span>
+        </li>
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">code</mat-icon> <span>GraphQL+REST API</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">location_city</mat-icon> <span>Monitoring</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">content_copy</mat-icon> <span>Team Management</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">photo_size_select_small</mat-icon>
+          <span>Automatic Backups</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">timeline</mat-icon> <span>Tier Resizing</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">flash_on</mat-icon> <span>Blazingly Fast</span>
+        </li>
+
+        <li class="enterprise-property" fxFlex="20%">
+          <mat-icon class="enterprise-icon">exit_to_app</mat-icon> <span>No Commitment</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex-margin br-bottom"></div>
+
+  <div class="container" fxFlex="100%" fxLayoutAlign="space-around">
+    <div fxFlex="100%">
+      <div class="packet" fxFlex="20%">
+        <mat-card class="no-padding">
+          <mat-toolbar class="bg-black">
+            <mat-toolbar-row>
+              <mat-icon class="packet-icon">star_border</mat-icon>
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+              <h3 class="packet-title">Free</h3>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-card-content>
+            <ul class="packet-information">
+              <li>Buckets</li>
+              <li>Users</li>
+              <li>Custom Functions</li>
+              <li>Support</li>
+              <li>PMS</li>
+              <li>Visual Composer</li>
+              <li>Web Page Build</li>
+              <li>PWA Buşild</li>
+              <li>Assetstore Access</li>
+              <li>Content Model Customization</li>
+              <li>Content Model Templates</li>
+              <li>Storage Access</li>
+              <li>CDN</li>
+              <li>Multi-Tenant Access</li>
+              <li>Multi-Language System</li>
+              <li>Data export/import (JSON)</li>
+              <li>Auto Publishing</li>
+              <li>Content History</li>
+              <li>Single Sign-On</li>
+              <li>Scheduled Backups</li>
+              <li>Time machine / Static snapshot</li>
+              <li>Mobile Application Build</li>
+              <li>Training/Onboarding</li>
+              <li>Solution Architect</li>
+              <li>White Labeling</li>
+              <li>SLA</li>
+              <li>Private Analytics</li>
+              <li>Custom Feature Development</li>
+              <li class="price">0$ <span class="period">per month</span></li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>
 
 <app-footer></app-footer>
