@@ -43,6 +43,20 @@
     color: #78909c;
   }
 
+  .plugin {
+    border-left: 14px solid #1c1c50;
+    margin: 10px!important;
+
+    &:hover {
+      border-left-color: cornflowerblue;
+      transform: translate(14px);
+      transition: all .3s linear;
+
+    }
+
+
+  }
+
   // Margin && Padding
 
   .unset-margin {
