@@ -3,6 +3,87 @@
     min-height: 200px;
   }
 
+  .info {
+    font-weight: unset;
+    text-align: center;
+    line-height: 30px;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+
+  p {
+    color: #1c1c50;
+    font-size: 1rem;
+    font-weight: 100;
+    line-height: 1.7;
+    text-align: justfiy;
+    padding-top: 12px;
+
+  }
+
+  a {
+    display: unset !important;
+  }
+
+  // Text Properties
+  .text-black {
+    color: black;
+  }
+
+  .text-gray {
+    color: #263238;
+  }
+
+  .text-white {
+    color: white;
+  }
+
+  .text-default {
+    color: #78909c;
+  }
+
+  // Margin && Padding
+
+  .unset-margin {
+    margin: unset !important;
+  }
+
+  .pt-0 {
+    padding-top: 0 !important;
+  }
+
+
+  .unset-padding {
+    padding: unset !important;
+  }
+
+  .blue {
+    background-color: #2196F3;
+  }
+
+  .gray {
+    background-color: #263238;
+  }
+
+  .bg-gray {
+    background: #eee;
+  }
+
+  .bg-black {
+    background: #263238;
+  }
+
+  .contact-button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  a {
+    .link-button {
+      width: 100%;
+    }
+  }
 
 
   ul {
@@ -34,10 +115,10 @@
           }
         }
 
-        p {
+        /*     p {
           font-weight: 100;
           line-height: 2;
-        }
+        }*/
       }
     }
   }
@@ -104,19 +185,17 @@
   .content-wrapper {
     display: flex;
     flex-wrap: wrap;
-    padding: 4% 0;
+    padding: 12px 0;
     flex-flow: row wrap;
     box-sizing: border-box;
     display: flex;
     place-content: center space-around;
     align-items: center;
 
-    &.bg-gray {
-      background: #eee;
-    }
+
 
     .container {
-      padding: 4% 0;
+      padding: 36px 0;
       margin: auto;
       max-width: 1224px !important;
 
@@ -128,6 +207,7 @@
 
   }
 
+
   .content-wrapper {
     color: #1c1c50;
 
@@ -135,22 +215,19 @@
       padding: 0;
     }
 
-    p {
-      color: #78909c;
-      line-height: 1.7;
 
-    }
   }
 
   .packet {
+    margin: 0 10px;
+
     .bg-black {
       background-color: #263238;
     }
+
+
   }
 
-  .no-padding {
-    padding: 0 !important;
-  }
 
   mat-icon {
     &.packet-icon {
@@ -167,19 +244,38 @@
   }
 
   mat-card {
+
+    border-radius: 0px;
+
+
     .packet-title {
       width: 100%;
       text-align: center;
       display: block;
       color: white;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+      margin: 14px 0px;
+    }
+
+
+    button {
+      color: white;
+      margin: 10px 0px;
+    }
+
+
+    .get {
+      text-align: center;
+      width: 100%;
     }
 
     ul {
       li {
         text-align: center;
         color: #78909c;
-        padding: 5px 0px;
-        border-bottom: 1px solid #eee;
+        padding: 12px 0px;
         font-size: 16px;
 
         &.price {
@@ -195,6 +291,7 @@
             color: #aeaeae;
           }
         }
+
       }
     }
   }
