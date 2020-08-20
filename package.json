@@ -39,7 +39,7 @@
     "@schematics/angular": "^8.0.0-beta.7",
     "ajv": "^6.6.1",
     "archiver": "^3.0.0",
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "bson": "^4.0.1",
