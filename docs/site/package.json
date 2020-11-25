@@ -30,7 +30,7 @@
     "@webcomponents/custom-elements": "^1.2.4",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
-    "highlight.js": "^9.15.8",
+    "highlight.js": "^10.1.2",
     "ng-inline-svg": "^8.5.1",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
