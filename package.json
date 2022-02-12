@@ -37,7 +37,7 @@
     "@nestjs/platform-ws": "^6.1.1",
     "@nestjs/websockets": "^6.1.1",
     "@schematics/angular": "^8.0.0-beta.7",
-    "ajv": "^6.6.1",
+    "ajv": "^6.12.3",
     "archiver": "^3.0.0",
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
